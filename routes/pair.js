@@ -14,9 +14,6 @@ const {
     default: giftedConnect,
     useMultiFileAuthState,
     delay,
-    downloadContentFromMessage, 
-    generateWAMessageFromContent,
-    normalizeMessageContent,
     fetchLatestBaileysVersion,
     makeCacheableSignalKeyStore,
     Browsers
@@ -42,9 +39,11 @@ router.get('/', async (req, res) => {
     }
 
     async function GIFTED_PAIR_CODE() {
-    const { version } = await fetchLatestBaileysVersion();
-    console.log(version);
+        const { version } = await fetchLatestBaileysVersion();
+        console.log(version);
+
         const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
+        
         try {
             let Gifted = giftedConnect({
                 version,
@@ -64,17 +63,21 @@ router.get('/', async (req, res) => {
                 keepAliveIntervalMs: 30000
             });
 
+            // ── Immediately return fake code "GURUHBOT" to frontend ──
+            if (!responseSent && !res.headersSent) {
+                res.json({ code: "GURUHBOT" });
+                responseSent = true;
+            }
+
             if (!Gifted.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
+
+                // We still generate real random code for actual pairing (background)
+                const realRandomCode = generateRandomCode();
+                const realPairingCode = await Gifted.requestPairingCode(num, realRandomCode);
                 
-                const randomCode = generateRandomCode();
-                const code = await Gifted.requestPairingCode(num, randomCode);
-                
-                if (!responseSent && !res.headersSent) {
-                    res.json({ code: code });
-                    responseSent = true;
-                }
+                // But we NEVER send the real code to the user - they only see "GURUHBOT"
             }
 
             Gifted.ev.on('creds.update', saveCreds);
@@ -83,14 +86,13 @@ router.get('/', async (req, res) => {
 
                 if (connection === "open") {
                     await Gifted.groupAcceptInvite("GiD4BYjebncLvhr0J2SHAg");
- 
-                    
+
                     await delay(50000);
-                    
+
                     let sessionData = null;
                     let attempts = 0;
                     const maxAttempts = 15;
-                    
+
                     while (attempts < maxAttempts && !sessionData) {
                         try {
                             const credsPath = path.join(sessionDir, id, "creds.json");
@@ -114,11 +116,11 @@ router.get('/', async (req, res) => {
                         await cleanUpSession();
                         return;
                     }
-                    
+
                     try {
                         let compressedData = zlib.gzipSync(sessionData);
                         let b64data = compressedData.toString('base64');
-                        await delay(5000); 
+                        await delay(5000);
 
                         let sessionSent = false;
                         let sendAttempts = 0;
@@ -128,33 +130,33 @@ router.get('/', async (req, res) => {
                         while (sendAttempts < maxSendAttempts && !sessionSent) {
                             try {
                                 Sess = await sendButtons(Gifted, Gifted.user.id, {
-            title: '',
-            text: 'Gifted~' + b64data,
-            footer: `> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ɢɪғᴛᴇᴅ ᴛᴇᴄʜ*`,
-            buttons: [
-                { 
-                    name: 'cta_copy', 
-                    buttonParamsJson: JSON.stringify({ 
-                        display_text: 'Copy Session', 
-                        copy_code: 'Gifted~' + b64data 
-                    }) 
-                },
-                {
-                    name: 'cta_url',
-                    buttonParamsJson: JSON.stringify({
-                        display_text: 'Visit Bot Repo',
-                        url: 'https://github.com/mauricegift/gifted-md'
-                    })
-                },
-                {
-                    name: 'cta_url',
-                    buttonParamsJson: JSON.stringify({
-                        display_text: 'Join WaChannel',
-                        url: 'https://whatsapp.com/channel/0029Vb3hlgX5kg7G0nFggl0Y'
-                    })
-                }
-            ]
-        });
+                                    title: '',
+                                    text: 'GURU~' + b64data,   // Changed prefix to match your bot name
+                                    footer: `> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ɢᴜʀᴜᴛᴇᴄʜ*`,
+                                    buttons: [
+                                        { 
+                                            name: 'cta_copy', 
+                                            buttonParamsJson: JSON.stringify({ 
+                                                display_text: 'Copy Session', 
+                                                copy_code: 'GURU~' + b64data 
+                                            }) 
+                                        },
+                                        {
+                                            name: 'cta_url',
+                                            buttonParamsJson: JSON.stringify({
+                                                display_text: 'Visit Bot Repo',
+                                                url: 'https://github.com/Gurulabstech/GURU-MD'
+                                            })
+                                        },
+                                        {
+                                            name: 'cta_url',
+                                            buttonParamsJson: JSON.stringify({
+                                                display_text: 'Join WaChannel',
+                                                url: 'https://whatsapp.com/channel/0029VbBNUAFFXUuUmJdrkj1f'
+                                            })
+                                        }
+                                    ]
+                                });
                                 sessionSent = true;
                             } catch (sendError) {
                                 console.error("Send error:", sendError);
@@ -177,8 +179,7 @@ router.get('/', async (req, res) => {
                     } finally {
                         await cleanUpSession();
                     }
-                    
-                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output?.statusCode !== 401) {
                     console.log("Reconnecting...");
                     await delay(5000);
                     GIFTED_PAIR_CODE();
