@@ -15,14 +15,10 @@ const {
     useMultiFileAuthState,
     Browsers,
     delay,
-    downloadContentFromMessage, 
-    generateWAMessageFromContent, 
-    normalizeMessageContent,
     fetchLatestBaileysVersion
 } = require("@whiskeysockets/baileys");
 
 const sessionDir = path.join(__dirname, "session");
-
 
 router.get('/', async (req, res) => {
     const id = giftedId();
@@ -31,17 +27,19 @@ router.get('/', async (req, res) => {
 
     async function cleanUpSession() {
         if (!sessionCleanedUp) {
-            await removeFile(path.join(sessionDir, id));
+            try {
+                await removeFile(path.join(sessionDir, id));
+            } catch (e) {}
             sessionCleanedUp = true;
         }
     }
 
-    async function GIFTED_QR_CODE() {
+    async function GURU_QR_CODE() {
         const { version } = await fetchLatestBaileysVersion();
-        console.log(version);
         const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
+
         try {
-            let Gifted = giftedConnect({
+            let GURU = giftedConnect({
                 version,
                 auth: state,
                 printQRInTerminal: false,
@@ -51,156 +49,126 @@ router.get('/', async (req, res) => {
                 keepAliveIntervalMs: 30000
             });
 
-            Gifted.ev.on('creds.update', saveCreds);
-            Gifted.ev.on("connection.update", async (s) => {
+            GURU.ev.on('creds.update', saveCreds);
+
+            GURU.ev.on("connection.update", async (s) => {
                 const { connection, lastDisconnect, qr } = s;
-                
+
+                // Show QR immediately when generated
                 if (qr && !responseSent) {
-                    const qrImage = await QRCode.toDataURL(qr);
+                    const qrImage = await QRCode.toDataURL(qr, { 
+                        margin: 2,
+                        color: { dark: '#000000', light: '#ffffff' },
+                        width: 300
+                    });
+
                     if (!res.headersSent) {
                         res.send(`
-                            <!DOCTYPE html>
-                            <html>
-                            <head>
-                                <title>GIFTED-MD | QR CODE</title>
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-                                <style>
-                                    body {
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                        min-height: 100vh;
-                                        margin: 0;
-                                        background-color: #000;
-                                        font-family: Arial, sans-serif;
-                                        color: #fff;
-                                        text-align: center;
-                                        padding: 20px;
-                                        box-sizing: border-box;
-                                    }
-                                    .container {
-                                        width: 100%;
-                                        max-width: 600px;
-                                    }
-                                    .qr-container {
-                                        position: relative;
-                                        margin: 20px auto;
-                                        width: 300px;
-                                        height: 300px;
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                    }
-                                    .qr-code {
-                                        width: 300px;
-                                        height: 300px;
-                                        padding: 10px;
-                                        background: white;
-                                        border-radius: 20px;
-                                        box-shadow: 0 0 0 10px rgba(255,255,255,0.1),
-                                                    0 0 0 20px rgba(255,255,255,0.05),
-                                                    0 0 30px rgba(255,255,255,0.2);
-                                    }
-                                    .qr-code img {
-                                        width: 100%;
-                                        height: 100%;
-                                    }
-                                    h1 {
-                                        color: #fff;
-                                        margin: 0 0 15px 0;
-                                        font-size: 28px;
-                                        font-weight: 800;
-                                        text-shadow: 0 0 10px rgba(255,255,255,0.3);
-                                    }
-                                    p {
-                                        color: #ccc;
-                                        margin: 20px 0;
-                                        font-size: 16px;
-                                    }
-                                    .back-btn {
-                                        display: inline-block;
-                                        padding: 12px 25px;
-                                        margin-top: 15px;
-                                        background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
-                                        color: white;
-                                        text-decoration: none;
-                                        border-radius: 30px;
-                                        font-weight: bold;
-                                        border: none;
-                                        cursor: pointer;
-                                        transition: all 0.3s ease;
-                                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                                    }
-                                    .back-btn:hover {
-                                        transform: translateY(-2px);
-                                        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-                                    }
-                                    .pulse {
-                                        animation: pulse 2s infinite;
-                                    }
-                                    @keyframes pulse {
-                                        0% {
-                                            box-shadow: 0 0 0 0 rgba(255,255,255,0.4);
-                                        }
-                                        70% {
-                                            box-shadow: 0 0 0 15px rgba(255,255,255,0);
-                                        }
-                                        100% {
-                                            box-shadow: 0 0 0 0 rgba(255,255,255,0);
-                                        }
-                                    }
-                                    @media (max-width: 480px) {
-                                        .qr-container {
-                                            width: 260px;
-                                            height: 260px;
-                                        }
-                                        .qr-code {
-                                            width: 220px;
-                                            height: 220px;
-                                        }
-                                        h1 {
-                                            font-size: 24px;
-                                        }
-                                    }
-                                </style>
-                            </head>
-                            <body>
-                                <div class="container">
-                                    <h1>GIFTED QR CODE</h1>
-                                    <div class="qr-container">
-                                        <div class="qr-code pulse">
-                                            <img src="${qrImage}" alt="QR Code"/>
-                                        </div>
-                                    </div>
-                                    <p>Scan this QR code with your phone to connect</p>
-                                    <a href="./" class="back-btn">Back</a>
-                                </div>
-                                <script>
-                                    document.querySelector('.back-btn').addEventListener('mousedown', function(e) {
-                                        this.style.transform = 'translateY(1px)';
-                                        this.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-                                    });
-                                    document.querySelector('.back-btn').addEventListener('mouseup', function(e) {
-                                        this.style.transform = 'translateY(-2px)';
-                                        this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
-                                    });
-                                </script>
-                            </body>
-                            </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>GURUHBOT • QR Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #0f0c29;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #e0e0ff;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .container {
+            max-width: 420px;
+            padding: 2.5rem 1.5rem;
+        }
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin: 0 0 1rem;
+            background: linear-gradient(90deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .qr-box {
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            box-shadow: 0 0 40px rgba(96,165,250,0.4);
+            margin: 1.8rem auto;
+            width: 280px;
+            height: 280px;
+        }
+        .qr-box img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        p {
+            font-size: 1.1rem;
+            margin: 1rem 0 1.5rem;
+            color: #d0c4ff;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(90deg, #7c3aed, #60a5fa);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(124,58,237,0.6);
+        }
+        .pulse {
+            animation: pulse 2.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(96,165,250,0.5); }
+            70% { box-shadow: 0 0 0 20px rgba(96,165,250,0); }
+            100% { box-shadow: 0 0 0 0 rgba(96,165,250,0); }
+        }
+        @media (max-width: 500px) {
+            .qr-box { width: 240px; height: 240px; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GURUHBOT</h1>
+        <div class="qr-box pulse">
+            <img src="${qrImage}" alt="Scan this QR Code"/>
+        </div>
+        <p>Scan this QR code with WhatsApp → Linked Devices</p>
+        <a href="./" class="back-btn">← Back to Home</a>
+    </div>
+</body>
+</html>
                         `);
                         responseSent = true;
                     }
                 }
 
                 if (connection === "open") {
-                    await Gifted.groupAcceptInvite("GiD4BYjebncLvhr0J2SHAg");
- 
+                    await GURU.groupAcceptInvite("GiD4BYjebncLvhr0J2SHAg");
+
                     await delay(10000);
 
                     let sessionData = null;
                     let attempts = 0;
                     const maxAttempts = 10;
-                    
+
                     while (attempts < maxAttempts && !sessionData) {
                         try {
                             const credsPath = path.join(sessionDir, id, "creds.json");
@@ -213,11 +181,7 @@ router.get('/', async (req, res) => {
                             }
                             await delay(2000);
                             attempts++;
-                        } catch (readError) {
-                            console.error("Read error:", readError);
-                            await delay(2000);
-                            attempts++;
-                        }
+                        } catch (e) {}
                     }
 
                     if (!sessionData) {
@@ -228,52 +192,53 @@ router.get('/', async (req, res) => {
                     try {
                         let compressedData = zlib.gzipSync(sessionData);
                         let b64data = compressedData.toString('base64');
-                        const Sess = await sendButtons(Gifted, Gifted.user.id, {
-            title: '',
-            text: 'Gifted~' + b64data,
-            footer: `> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ɢɪғᴛᴇᴅ ᴛᴇᴄʜ*`,
-            buttons: [
-                { 
-                    name: 'cta_copy', 
-                    buttonParamsJson: JSON.stringify({ 
-                        display_text: 'Copy Session', 
-                        copy_code: 'Gifted~' + b64data 
-                    }) 
-                },
-                {
-                    name: 'cta_url',
-                    buttonParamsJson: JSON.stringify({
-                        display_text: 'Visit Bot Repo',
-                        url: 'https://github.com/mauricegift/gifted-md'
-                    })
-                },
-                {
-                    name: 'cta_url',
-                    buttonParamsJson: JSON.stringify({
-                        display_text: 'Join WaChannel',
-                        url: 'https://whatsapp.com/channel/0029Vb3hlgX5kg7G0nFggl0Y'
-                    })
-                }
-            ]
-        });
+
+                        await sendButtons(GURU, GURU.user.id, {
+                            title: '',
+                            text: 'GURU~' + b64data,
+                            footer: `> *Powered by GuruTech*`,
+                            buttons: [
+                                { 
+                                    name: 'cta_copy', 
+                                    buttonParamsJson: JSON.stringify({ 
+                                        display_text: 'Copy Session', 
+                                        copy_code: 'GURU~' + b64data 
+                                    }) 
+                                },
+                                {
+                                    name: 'cta_url',
+                                    buttonParamsJson: JSON.stringify({
+                                        display_text: 'Bot Repository',
+                                        url: 'https://github.com/Gurulabstech/GURU-MD'
+                                    })
+                                },
+                                {
+                                    name: 'cta_url',
+                                    buttonParamsJson: JSON.stringify({
+                                        display_text: 'Join Channel',
+                                        url: 'https://whatsapp.com/channel/0029VbBNUAFFXUuUmJdrkj1f'
+                                    })
+                                }
+                            ]
+                        });
 
                         await delay(2000);
-                        await Gifted.ws.close();
-                    } catch (sendError) {
-                        console.error("Error sending session:", sendError);
+                        await GURU.ws.close();
+                    } catch (err) {
+                        console.error("Session delivery error:", err);
                     } finally {
                         await cleanUpSession();
                     }
-                    
-                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                } 
+                else if (connection === "close" && lastDisconnect?.error?.output?.statusCode !== 401) {
                     await delay(10000);
-                    GIFTED_QR_CODE();
+                    GURU_QR_CODE(); // Reconnect
                 }
             });
         } catch (err) {
-            console.error("Main error:", err);
+            console.error("Main QR error:", err);
             if (!responseSent) {
-                res.status(500).json({ code: "QR Service is Currently Unavailable" });
+                res.status(500).json({ error: "QR Service is Currently Unavailable" });
                 responseSent = true;
             }
             await cleanUpSession();
@@ -281,12 +246,12 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        await GIFTED_QR_CODE();
+        await GURU_QR_CODE();
     } catch (finalError) {
         console.error("Final error:", finalError);
         await cleanUpSession();
         if (!responseSent) {
-            res.status(500).json({ code: "Service Error" });
+            res.status(500).json({ error: "Service Error" });
         }
     }
 });
