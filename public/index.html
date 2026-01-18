@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>GURU MD • Advanced WhatsApp Bot Dashboard</title>
-    
+    <title>GURU MD • Advanced WhatsApp Bot</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     <style>
         :root {
-            --bg-main:      #0b001f;
-            --bg-dark:      #0f0529;
+            --bg:           #050314;
+            --surface:      #0e0829;
+            --surface-2:    rgba(20, 15, 60, 0.65);
             --purple:       #7c3aed;
             --purple-dark:  #5b21b6;
-            --blue:         #5b7fff;
-            --blue-light:   #a5b4fc;
-            --text:         #f1e9ff;
-            --text-muted:   #b0a0ff;
-            --card:         rgba(20, 15, 60, 0.55);
-            --card-border:  rgba(124, 58, 237, 0.28);
-            --glow:         0 0 35px rgba(124, 58, 237, 0.38);
-            --transition:   all 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-            --shadow-3d:    0 8px 16px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.3);
+            --blue:         #6380ff;
+            --text:         #f3efff;
+            --text-light:   #d0c4ff;
+            --text-muted:   #a38cff;
+            --border:       rgba(124, 58, 237, 0.22);
+            --glow:         0 0 28px rgba(124, 58, 237, 0.32);
+            --transition:   all 0.32s ease;
         }
 
         * {
@@ -34,511 +33,396 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--bg-main);
+        html, body {
+            height: 100%;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
             color: var(--text);
-            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
             background-image: 
-                radial-gradient(circle at 15% 10%, rgba(124,58,237,0.12) 0%, transparent 25%),
-                radial-gradient(circle at 85% 75%, rgba(91,127,255,0.10) 0%, transparent 30%);
-            overflow-x: hidden;
-            perspective: 1200px; /* Enable 3D space */
+                radial-gradient(circle at 8% 12%, rgba(124,58,237,0.09) 0%, transparent 22%),
+                radial-gradient(circle at 92% 88%, rgba(99,128,255,0.07) 0%, transparent 25%);
+            background-attachment: fixed;
         }
 
-        /* ── 3D Glass Card ── */
-        .glass-card {
-            background: var(--card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.2rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow-3d);
-            transform-style: preserve-3d;
-            transform: rotateX(0deg) rotateY(0deg);
+        /* ── Container ── */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
         }
 
-        .glass-card:hover {
-            transform: rotateX(2deg) rotateY(4deg) translateZ(20px);
-            box-shadow: var(--glow), var(--shadow-3d);
-            border-color: var(--purple);
-        }
-
-        /* ── Navbar ── */
-        .navbar {
+        /* ── Header / Navbar ── */
+        header {
             position: fixed;
             top: 0;
-            width: 100%;
-            padding: 1.2rem 5%;
-            background: rgba(11, 0, 31, 0.82);
-            backdrop-filter: blur(16px);
+            left: 0;
+            right: 0;
+            height: 80px;
             z-index: 1000;
-            border-bottom: 1px solid var(--card-border);
-            box-shadow: var(--shadow-3d);
-            transform: translateZ(50px); /* 3D lift */
+            background: rgba(5, 3, 20, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
         }
 
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
+        .header-inner {
+            height: 100%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.9rem;
-            text-decoration: none;
-            font-family: 'Orbitron', monospace;
-        }
-
-        .logo-icon {
-            font-size: 2.1rem;
-            color: var(--purple);
-            filter: drop-shadow(0 0 10px var(--purple));
-            transform: rotateY(10deg); /* Slight 3D tilt */
-        }
-
-        .logo-text {
-            font-size: 1.8rem;
+            gap: 12px;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--purple), var(--blue), var(--blue-light));
+            font-size: 1.75rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .logo-gradient {
+            background: linear-gradient(90deg, #a78bfa, #7c3aed, #6380ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
 
-        .nav-menu {
+        nav ul {
             display: flex;
-            gap: 2.2rem;
+            gap: 42px;
+            list-style: none;
         }
 
-        .nav-link {
-            color: var(--text-muted);
+        nav a {
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.98rem;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            transition: var(--transition);
+            gap: 8px;
         }
 
-        .nav-link:hover {
+        nav a:hover {
             color: white;
-            text-shadow: 0 0 12px rgba(124,58,237,0.7);
-            transform: translateZ(10px); /* 3D pop */
+            text-shadow: 0 0 12px rgba(124,58,237,0.6);
         }
 
-        .menu-toggle {
-            display: none;
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* ── Dashboard Hero ── */
+        /* ── Hero ── */
         .hero {
-            padding: 14rem 5% 8rem;
-            text-align: center;
-            position: relative;
-            transform-style: preserve-3d;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 0 100px;
         }
 
         .hero-content {
-            max-width: 920px;
-            margin: 0 auto;
-            transform: translateZ(30px); /* 3D depth */
+            max-width: 780px;
         }
 
         .hero-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2.8rem, 7vw, 5.2rem);
+            font-size: 4.6rem;
             font-weight: 700;
-            background: linear-gradient(90deg, #c084fc, #7c3aed, #60a5fa, #a5b4fc);
+            line-height: 1.05;
+            margin-bottom: 1.4rem;
+            background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed, #6380ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            line-height: 1.05;
-            margin-bottom: 1.4rem;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .hero-subtitle {
-            font-size: 1.28rem;
+            font-size: 1.38rem;
             color: var(--text-muted);
-            max-width: 720px;
-            margin: 0 auto 2.8rem;
-            line-height: 1.55;
+            margin-bottom: 3rem;
+            max-width: 640px;
         }
 
-        .hero-buttons {
+        .action-buttons {
             display: flex;
-            gap: 1.3rem;
-            justify-content: center;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 0.95rem 2.4rem;
-            border-radius: 50px;
+            padding: 14px 32px;
+            border-radius: 12px;
             font-weight: 600;
+            font-size: 1.05rem;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.7rem;
-            font-size: 1.05rem;
+            gap: 10px;
             transition: var(--transition);
-            box-shadow: var(--shadow-3d);
+            white-space: nowrap;
         }
 
         .btn-primary {
-            background: linear-gradient(90deg, var(--purple), #6d28d9, var(--blue));
+            background: linear-gradient(90deg, #7c3aed, #5b21b6, #4f46e5);
             color: white;
-            box-shadow: var(--glow), var(--shadow-3d);
+            box-shadow: 0 8px 32px rgba(124,58,237,0.35);
         }
 
         .btn-primary:hover {
-            transform: translateY(-4px) scale(1.03) rotateX(5deg);
-            box-shadow: 0 0 50px rgba(124,58,237,0.6), var(--shadow-3d);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(124,58,237,0.5);
         }
 
         .btn-outline {
-            border: 1.5px solid var(--purple);
-            color: var(--blue-light);
+            border: 1.5px solid rgba(124,58,237,0.45);
+            color: var(--text-light);
             background: rgba(124,58,237,0.08);
         }
 
         .btn-outline:hover {
-            background: rgba(124,58,237,0.18);
+            background: rgba(124,58,237,0.16);
+            border-color: #a78bfa;
             color: white;
-            box-shadow: var(--glow), var(--shadow-3d);
-            transform: translateY(-4px) rotateY(3deg);
         }
 
-        /* ── Stats Dashboard ── */
-        .stats-dashboard {
-            max-width: 1400px;
-            margin: 0 auto 6rem;
-            padding: 0 5%;
+        /* ── Stats Row ── */
+        .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin: 100px 0 140px;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
 
-        .stat-card {
-            background: var(--card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2rem;
+        .stat-item {
             text-align: center;
-            box-shadow: var(--shadow-3d);
-            transform-style: preserve-3d;
-            transition: var(--transition);
+            padding: 20px 0;
         }
 
-        .stat-card:hover {
-            transform: rotateX(3deg) rotateY(5deg) translateZ(25px);
-            box-shadow: var(--glow), var(--shadow-3d);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            color: var(--blue);
-            margin-bottom: 1rem;
-            transform: translateZ(15px);
-        }
-
-        .stat-value {
-            font-size: 2.8rem;
+        .stat-number {
+            font-size: 3.2rem;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--purple), var(--blue));
+            background: linear-gradient(90deg, #d8b4fe, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.5rem;
+            line-height: 1;
+            margin-bottom: 8px;
         }
 
         .stat-label {
             color: var(--text-muted);
             font-size: 1rem;
+            font-weight: 500;
         }
 
         /* ── Features ── */
         .features {
-            padding: 6rem 5% 10rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            transform: translateZ(20px); /* Layer depth */
+            padding: 80px 0 140px;
         }
 
         .section-title {
             text-align: center;
-            font-family: 'Orbitron', monospace;
-            font-size: 2.8rem;
-            margin-bottom: 4rem;
-            background: linear-gradient(90deg, var(--purple), var(--blue));
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 80px;
+            background: linear-gradient(90deg, #c084fc, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 3px 6px rgba(0,0,0,0.4);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--surface-2);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 32px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--glow);
+            border-color: rgba(124,58,237,0.5);
+        }
+
+        .feature-icon {
+            font-size: 2.8rem;
+            color: #a78bfa;
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-size: 1.45rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .feature-text {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.65;
         }
 
         /* ── Footer ── */
         footer {
-            background: rgba(5, 2, 20, 0.9);
-            padding: 5rem 5% 3rem;
-            border-top: 1px solid var(--card-border);
-            transform: translateZ(10px);
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.7rem;
-            background: linear-gradient(90deg, var(--purple), var(--blue));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1.2rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .copyright {
+            padding: 100px 0 60px;
+            background: rgba(8, 5, 28, 0.6);
+            border-top: 1px solid var(--border);
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 2.5rem;
-            border-top: 1px solid rgba(124,58,237,0.15);
             color: var(--text-muted);
-            font-size: 0.92rem;
+            font-size: 0.95rem;
         }
 
-        .copyright a {
-            color: var(--blue-light);
+        footer a {
+            color: #a78bfa;
             text-decoration: none;
         }
 
-        /* Mobile */
-        @media (max-width: 820px) {
-            .nav-menu {
-                position: fixed;
-                inset: 0 0 0 30%;
-                background: rgba(11,0,31,0.96);
-                backdrop-filter: blur(16px);
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                padding: 4rem 3rem;
-                transform: translateX(100%);
-                transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1);
-            }
+        footer a:hover {
+            color: #c084fc;
+            text-decoration: underline;
+        }
 
-            .nav-menu.active {
-                transform: translateX(0);
-            }
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 3.8rem; }
+            .container { padding: 0 24px; }
+            nav ul { gap: 28px; }
+        }
 
-            .menu-toggle {
-                display: block;
-            }
-
-            .hero {
-                padding: 11rem 5% 6rem;
-            }
-
-            .hero-title {
-                font-size: 3.6rem;
-            }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.2rem; }
+            .hero-subtitle { font-size: 1.22rem; }
+            .action-buttons { flex-direction: column; }
+            .btn { justify-content: center; width: 100%; max-width: 360px; }
+            nav { display: none; } /* You can add mobile menu later if needed */
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
+<header>
+    <div class="container header-inner">
         <a href="#" class="logo">
-            <i class="fas fa-brain logo-icon"></i>
-            <span class="logo-text">GURU MD</span>
+            <span class="logo-gradient">GURU MD</span>
         </a>
 
-        <button class="menu-toggle" id="menuToggle">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <div class="nav-menu" id="navMenu">
-            <a href="https://github.com/Gurulabstech/GURU-MD" class="nav-link" target="_blank">
-                <i class="fab fa-github"></i> Repository
-            </a>
-            <a href="./pair" class="nav-link">
-                <i class="fas fa-link"></i> Pair Code
-            </a>
-            <a href="./qr" class="nav-link">
-                <i class="fas fa-qrcode"></i> QR Code
-            </a>
-            <a href="https://t.me/GuruTechSupport" class="nav-link" target="_blank">
-                <i class="fab fa-telegram"></i> Support
-            </a>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="./pair"><i class="fas fa-link"></i> Pair Code</a></li>
+                <li><a href="./qr"><i class="fas fa-qrcode"></i> QR Login</a></li>
+                <li><a href="https://github.com/Gurulabstech/GURU-MD" target="_blank"><i class="fab fa-github"></i> Repository</a></li>
+                <li><a href="https://t.me/GuruTechSupport" target="_blank"><i class="fab fa-telegram"></i> Support</a></li>
+            </ul>
+        </nav>
     </div>
-</nav>
+</header>
 
 <section class="hero">
-    <div class="hero-content">
-        <h1 class="hero-title">GURU MD Dashboard</h1>
-        <p class="hero-subtitle">
-            Next-generation WhatsApp automation platform • Powerful • Secure • Always evolving
-        </p>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">GURU MD</h1>
+            <p class="hero-subtitle">
+                Modern, powerful and reliable WhatsApp automation solution<br>
+                Built for performance, security and ease of use.
+            </p>
 
-        <div class="hero-buttons">
-            <a href="./pair" class="btn btn-primary">
-                <i class="fas fa-link"></i> Get Pair Code
-            </a>
-            <a href="./qr" class="btn btn-outline">
-                <i class="fas fa-qrcode"></i> Scan QR
-            </a>
+            <div class="action-buttons">
+                <a href="./pair" class="btn btn-primary">
+                    <i class="fas fa-link"></i> Get Pair Code
+                </a>
+                <a href="./qr" class="btn btn-outline">
+                    <i class="fas fa-qrcode"></i> Scan QR Code
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="stats-dashboard">
-    <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
-        <div class="stat-value">8.7K</div>
-        <div class="stat-label">Active Users</div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
-        <div class="stat-value">245K</div>
-        <div class="stat-label">Messages Processed</div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-clock"></i></div>
-        <div class="stat-value">99.98%</div>
-        <div class="stat-label">Uptime</div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-bolt"></i></div>
-        <div class="stat-value">1.2ms</div>
-        <div class="stat-label">Avg Response Time</div>
-    </div>
-</section>
-
-<section class="features">
-    <h2 class="section-title">Core Features</h2>
-    <div class="features-grid">
-        <div class="glass-card">
-            <div class="feature-icon"><i class="fas fa-link"></i></div>
-            <h3 class="feature-title">Pair Code Login</h3>
-            <p class="feature-description">Fast & secure connection without QR — perfect for multi-device usage</p>
+<div class="container">
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">12.4K+</div>
+            <div class="stat-label">Active Sessions</div>
         </div>
-
-        <div class="glass-card">
-            <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
-            <h3 class="feature-title">Classic QR Login</h3>
-            <p class="feature-description">Traditional & reliable way to connect in seconds</p>
+        <div class="stat-item">
+            <div class="stat-number">1.8M+</div>
+            <div class="stat-label">Messages Daily</div>
         </div>
-
-        <div class="glass-card">
-            <div class="feature-icon"><i class="fas fa-code-branch"></i></div>
-            <h3 class="feature-title">Open Source</h3>
-            <p class="feature-description">Full source code available — modify, learn, contribute</p>
+        <div class="stat-item">
+            <div class="stat-number">99.96%</div>
+            <div class="stat-label">Uptime</div>
         </div>
-
-        <div class="glass-card">
-            <div class="feature-icon"><i class="fas fa-headset"></i></div>
-            <h3 class="feature-title">Active Support</h3>
-            <p class="feature-description">Real human help through Telegram & community channels</p>
-        </div>
-
-        <div class="glass-card">
-            <div class="feature-icon"><i class="fas fa-sync"></i></div>
-            <h3 class="feature-title">Frequent Updates</h3>
-            <p class="feature-description">New commands, fixes & features every few weeks</p>
+        <div class="stat-item">
+            <div class="stat-number">~120ms</div>
+            <div class="stat-label">Avg Response</div>
         </div>
     </div>
-</section>
+
+    <section class="features">
+        <h2 class="section-title">Core Capabilities</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-link"></i></div>
+                <div class="feature-title">Pair Code Connection</div>
+                <p class="feature-text">Fast, secure and phone-independent way to connect your WhatsApp account</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
+                <div class="feature-title">Classic QR Login</div>
+                <p class="feature-text">Traditional scanning method — quick and widely supported</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-code"></i></div>
+                <div class="feature-title">Open Source</div>
+                <p class="feature-text">Full source code available — customize, audit, contribute</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <div class="feature-title">High Performance</div>
+                <p class="feature-text">Optimized engine for low latency and high message throughput</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="feature-title">Enhanced Security</div>
+                <p class="feature-text">Multi-layer protection, session isolation & secure pairing</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                <div class="feature-title">Regular Updates</div>
+                <p class="feature-text">New features, bug fixes and WhatsApp protocol updates</p>
+            </div>
+        </div>
+    </section>
+</div>
 
 <footer>
-    <div class="footer-content">
-        <div>
-            <div class="footer-logo">
-                <i class="fas fa-brain"></i>
-                GURU MD
-            </div>
-            <p style="color:var(--text-muted); margin:1.2rem 0;">
-                Advanced WhatsApp bot platform<br>by <b>GuruTech</b>
-            </p>
-        </div>
-
-        <div>
-            <h3 style="color:var(--blue-light); margin-bottom:1.3rem;">Quick Access</h3>
-            <div style="display:grid; gap:0.9rem; color:var(--text-muted);">
-                <a href="./pair" style="color:inherit; text-decoration:none;">→ Pair Code</a>
-                <a href="./qr" style="color:inherit; text-decoration:none;">→ QR Login</a>
-                <a href="https://github.com/Gurulabstech/GURU-MD" target="_blank" style="color:inherit; text-decoration:none;">→ Repository</a>
-            </div>
-        </div>
-
-        <div>
-            <h3 style="color:var(--blue-light); margin-bottom:1.3rem;">Community</h3>
-            <div style="display:grid; gap:0.9rem; color:var(--text-muted);">
-                <a href="https://github.com/Gurulabstech" target="_blank" style="color:inherit; text-decoration:none;">→ GitHub</a>
-                <a href="https://t.me/GuruTechSupport" target="_blank" style="color:inherit; text-decoration:none;">→ Telegram Support</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="copyright">
-        © <script>document.write(new Date().getFullYear())</script> • 
-        Made with <span style="color:#f472b6;">♥</span> by 
-        <a href="https://github.com/Gurulabstech" target="_blank">GuruTech</a>
+    <div class="container">
+        <p>
+            © <script>document.write(new Date().getFullYear())</script> GURU MD • 
+            Developed by <a href="https://github.com/Gurulabstech" target="_blank">GuruTech</a>
+        </p>
     </div>
 </footer>
 
-<script>
-    // Mobile menu
-    const toggle = document.getElementById('menuToggle');
-    const menu = document.getElementById('navMenu');
-
-    toggle.onclick = () => {
-        menu.classList.toggle('active');
-        toggle.innerHTML = menu.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-    };
-
-    // Close menu when clicking link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            menu.classList.remove('active');
-            toggle.innerHTML = '<i class="fas fa-bars"></i>';
-        });
-    });
-</script>
 </body>
 </html>
