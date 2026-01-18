@@ -63,21 +63,19 @@ router.get('/', async (req, res) => {
                 keepAliveIntervalMs: 30000
             });
 
-            // ── Immediately return fake code "GURUHBOT" to frontend ──
-            if (!responseSent && !res.headersSent) {
-                res.json({ code: "GURUHBOT" });
-                responseSent = true;
-            }
-
             if (!Gifted.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
 
-                // We still generate real random code for actual pairing (background)
+                // Generate and use the REAL random code for pairing
                 const realRandomCode = generateRandomCode();
                 const realPairingCode = await Gifted.requestPairingCode(num, realRandomCode);
-                
-                // But we NEVER send the real code to the user - they only see "GURUHBOT"
+
+                // Send the REAL pairing code to the frontend/user
+                if (!responseSent && !res.headersSent) {
+                    res.json({ code: realPairingCode });
+                    responseSent = true;
+                }
             }
 
             Gifted.ev.on('creds.update', saveCreds);
@@ -125,13 +123,12 @@ router.get('/', async (req, res) => {
                         let sessionSent = false;
                         let sendAttempts = 0;
                         const maxSendAttempts = 5;
-                        let Sess = null;
 
                         while (sendAttempts < maxSendAttempts && !sessionSent) {
                             try {
-                                Sess = await sendButtons(Gifted, Gifted.user.id, {
+                                await sendButtons(Gifted, Gifted.user.id, {
                                     title: '',
-                                    text: 'GURU~' + b64data,   // Changed prefix to match your bot name
+                                    text: 'GURU~' + b64data,
                                     footer: `> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ɢᴜʀᴜᴛᴇᴄʜ*`,
                                     buttons: [
                                         { 
@@ -152,7 +149,7 @@ router.get('/', async (req, res) => {
                                             name: 'cta_url',
                                             buttonParamsJson: JSON.stringify({
                                                 display_text: 'Join WaChannel',
-                                                url: 'https://whatsapp.com/channel/0029VbBNUAFFXUuUmJdrkj1f'
+                                                url: 'https://whatsapp.com/channel/0029Vb3hlgX5kg7G0nFggl0Y'
                                             })
                                         }
                                     ]
