@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GIFTED MD | PAIR CODE</title>
+    <title>GURU MD | PAIR CODE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -42,22 +42,24 @@
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 20%);
-            animation: gradientPulse 15s ease infinite;
+            animation: colorCycle 20s ease infinite;
         }
 
-        @keyframes gradientPulse {
-            0% { background-position: 10% 20%, 90% 80%; }
-            50% { background-position: 15% 25%, 85% 75%; }
-            100% { background-position: 10% 20%, 90% 80%; }
+        @keyframes colorCycle {
+            0% { filter: hue-rotate(0deg); }  /* Black-ish base */
+            25% { filter: hue-rotate(90deg); } /* Purple tones */
+            50% { filter: hue-rotate(180deg); } /* White/bright */
+            75% { filter: hue-rotate(270deg); } /* Pink hues */
+            100% { filter: hue-rotate(360deg); } /* Back to start */
         }
 
         .home-btn {
             position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
+            top: 1rem;
+            left: 1rem;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 30px;
             font-weight: 600;
             text-decoration: none;
@@ -67,6 +69,7 @@
             align-items: center;
             gap: 0.5rem;
             transition: var(--transition);
+            animation: colorCycle 20s ease infinite;
         }
 
         .home-btn:hover {
@@ -76,11 +79,11 @@
 
         .container {
             background-color: var(--card-bg);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 16px;
             box-shadow: var(--shadow);
             width: 100%;
-            max-width: 500px;
+            max-width: 420px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -88,6 +91,7 @@
             animation: fadeIn 0.5s ease-out;
             z-index: 1;
             margin-top: 2rem;
+            animation: colorCycle 20s ease infinite;
         }
 
         .container::before {
@@ -112,57 +116,27 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1.5rem;
-            position: relative;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
-            animation: pulseGlow 2s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px rgba(138, 43, 226, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(138, 43, 226, 0.6); }
-        }
-
         h1 {
             color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         p {
             color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         .input-container {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .input-container i {
@@ -175,7 +149,7 @@
 
         input[type="text"] {
             width: 100%;
-            padding: 15px 15px 15px 45px;
+            padding: 12px 12px 12px 40px;
             border: 2px solid rgba(138, 43, 226, 0.3);
             border-radius: 10px;
             background-color: var(--input-bg);
@@ -193,7 +167,7 @@
         .btn {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 15px;
+            padding: 12px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -205,6 +179,7 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 1rem;
+            animation: colorCycle 20s ease infinite;
         }
 
         .btn:hover {
@@ -237,8 +212,8 @@
         }
 
         #result {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
+            margin-top: 1rem;
+            padding: 1rem;
             border-radius: 10px;
             display: none;
             animation: fadeIn 0.3s ease-out;
@@ -246,19 +221,20 @@
             font-weight: 500;
             background-color: rgba(138, 43, 226, 0.1);
             border-left: 4px solid var(--primary);
+            animation: colorCycle 20s ease infinite;
         }
 
         #loading-spinner {
             display: none;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             margin: 0 auto;
-            border: 4px solid rgba(138, 43, 226, 0.2);
-            border-top: 4px solid var(--primary);
+            border: 3px solid rgba(138, 43, 226, 0.2);
+            border-top: 3px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -269,33 +245,34 @@
         }
 
         #pair-code {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary);
-            margin: 1rem 0;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+            margin: 0.5rem 0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(138, 43, 226, 0.3);
             animation: textGlow 2s infinite alternate;
         }
 
         @keyframes textGlow {
-            0% { text-shadow: 0 0 5px rgba(138, 43, 226, 0.3); }
-            100% { text-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
+            0% { text-shadow: 0 0 4px rgba(138, 43, 226, 0.3); }
+            100% { text-shadow: 0 0 12px rgba(138, 43, 226, 0.5); }
         }
 
         .action-buttons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.8rem;
+            margin-top: 1rem;
         }
 
         .action-btn {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            animation: colorCycle 20s ease infinite;
         }
 
         .copy-btn {
@@ -322,8 +299,8 @@
 
         .error-message {
             color: var(--error);
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
+            margin-top: 0.4rem;
+            font-size: 0.85rem;
             display: none;
             animation: shake 0.5s;
         }
@@ -336,29 +313,35 @@
 
         .success-message {
             color: var(--success);
-            margin-top: 1rem;
+            margin-top: 0.8rem;
             display: none;
+        }
+
+        .success-note {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 1.5rem;
+                padding: 1.2rem;
             }
             
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             
             .action-buttons {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 0.5rem;
             }
 
             .home-btn {
-                top: 1rem;
-                right: 1rem;
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
+                top: 0.8rem;
+                left: 0.8rem;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
             }
         }
 
@@ -393,24 +376,19 @@
     </a>
     
     <div class="container">
-        <div class="logo">
-            <img src="https://gitcdn.giftedtech.co.ke/image/AZO_image.jpg" alt="GIFTED MD">
-        </div>
         
-        <h1>GIFTED PAIR CODE</h1>
-        <p>Enter your WhatsApp number without + sign</p>
+        <h1>X GURU | Pair Code <span class="fas fa-video" style="font-size: 1rem; color: var(--text-light);"></span></h1>
+        <p style="font-size: 1.4rem; font-weight: bold;">Hi. X Code</p>
+        <p>The system is ready. Enter your number with country code (e.g., 254..) to get your code.</p>
         
-        <div class="form-group">
-            <label for="phone-number">Phone Number</label>
-            <div class="input-container">
-                <i class="fas fa-comment"></i>
-                <input type="text" id="phone-number" placeholder="e.g., 2547xxxxxxxx" inputmode="numeric" pattern="[0-9]*">
-            </div>
-            <div class="error-message" id="error-message">Please enter a valid phone number (10-15 digits)</div>
+        <div class="input-container">
+            <i class="fas fa-phone"></i>
+            <input type="text" id="phone-number" placeholder="+254 762 025340" inputmode="numeric" pattern="[0-9]*">
         </div>
+        <div class="error-message" id="error-message">Please enter a valid phone number (10-15 digits)</div>
         
         <button id="submit" class="btn">
-            <span id="btn-text">GET CODE</span>
+            <span id="btn-text">Get Code</span>
             <span id="btn-spinner" style="display: none;">
                 <i class="fas fa-spinner fa-spin"></i>
             </span>
@@ -419,16 +397,16 @@
         <div id="loading-spinner" class="spinner"></div>
         
         <div id="result">
-            <p>Your pairing code is:</p>
+            <p>Your Pairing Code:</p>
             <div id="pair-code"></div>
-            <p>Enter this code in your WhatsApp linked devices</p>
+            <p class="success-note">Pairing session is active now.</p>
             
             <div class="action-buttons">
                 <button id="copy-btn" class="action-btn copy-btn">
-                    <i class="fas fa-copy"></i> COPY CODE
+                    Copy Code
                 </button>
                 <a href="./" class="action-btn back-btn">
-                    <i class="fas fa-arrow-left"></i> BACK
+                    Back
                 </a>
             </div>
             
