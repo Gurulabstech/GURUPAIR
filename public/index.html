@@ -2,31 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <!-- Force desktop width + completely disable zoom -->
+    <!-- Force desktop width + disable zoom completely -->
     <meta name="viewport" content="width=1280, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
     <title>GURU MD • Advanced WhatsApp Bot</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     <style>
         :root {
-            --bg:           #050314;
-            --surface:      #0e0829;
-            --surface-2:    rgba(20, 15, 60, 0.65);
-            --purple:       #7c3aed;
-            --purple-dark:  #5b21b6;
-            --blue:         #6380ff;
-            --text:         #f3efff;
-            --text-light:   #d0c4ff;
-            --text-muted:   #a38cff;
-            --border:       rgba(124, 58, 237, 0.22);
-            --glow:         0 0 28px rgba(124, 58, 237, 0.32);
-            --transition:   all 0.32s ease;
+            --bg: #0b001f;
+            --purple: #7c3aed;
+            --purple-dark: #5b21b6;
+            --blue: #5b7fff;
+            --blue-light: #a5b4fc;
+            --text: #f1e9ff;
+            --text-muted: #b0a0ff;
+            --card: rgba(20, 15, 60, 0.55);
+            --border: rgba(124, 58, 237, 0.28);
+            --glow: 0 0 35px rgba(124, 58, 237, 0.38);
         }
 
         * {
@@ -36,30 +34,23 @@
         }
 
         html, body {
-            height: 100%;
             width: 1280px;
+            height: 100%;
             margin: 0 auto;
             overflow-x: hidden;
-            overflow-y: auto;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
-            -webkit-text-size-adjust: 100%;
-            touch-action: manipulation;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-image: 
-                radial-gradient(circle at 8% 12%, rgba(124,58,237,0.09) 0%, transparent 22%),
-                radial-gradient(circle at 92% 88%, rgba(99,128,255,0.07) 0%, transparent 25%);
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             background-attachment: fixed;
         }
 
-        /* Force fixed desktop width everywhere */
-        .container,
-        header,
-        main,
-        footer {
+        /* Fixed desktop width everywhere */
+        header, main, footer {
             width: 1280px !important;
             max-width: 1280px !important;
             min-width: 1280px !important;
@@ -75,109 +66,101 @@
             width: 1280px;
             height: 80px;
             z-index: 1000;
-            background: rgba(5, 3, 20, 0.94);
+            background: rgba(11, 0, 31, 0.85);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
         }
 
-        .header-inner {
+        .nav-inner {
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 40px;
+            padding: 0 60px;
         }
 
         .logo {
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: -0.5px;
-            text-decoration: none;
-        }
-
-        .logo-gradient {
-            background: linear-gradient(90deg, #a78bfa, #7c3aed, #6380ff);
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #c084fc, #7c3aed, #60a5fa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-decoration: none;
         }
 
         nav ul {
             display: flex;
-            gap: 40px;
+            gap: 48px;
             list-style: none;
             margin: 0;
             padding: 0;
         }
 
         nav a {
-            color: var(--text-light);
+            color: #d0c4ff;
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: var(--transition);
         }
 
         nav a:hover {
             color: white;
-            text-shadow: 0 0 12px rgba(124,58,237,0.6);
+            text-shadow: 0 0 12px rgba(124,58,237,0.7);
         }
 
         main {
-            margin-top: 100px;
-            padding-bottom: 60px;
+            margin-top: 120px;
+            padding-bottom: 80px;
         }
 
         .hero {
-            padding: 80px 0 60px;
             text-align: center;
+            padding: 80px 0 60px;
         }
 
         .hero-title {
-            font-size: 5.2rem;
+            font-size: 5.8rem;
             font-weight: 800;
             line-height: 1;
-            margin-bottom: 1.4rem;
-            background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed, #6380ff);
+            margin: 0 0 1rem;
+            background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed, #60a5fa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-muted);
+            font-size: 1.6rem;
+            color: #d0c4ff;
             max-width: 900px;
             margin: 0 auto 3rem;
+            line-height: 1.4;
         }
 
         .action-buttons {
             display: flex;
-            gap: 1.8rem;
+            gap: 24px;
             justify-content: center;
-            flex-wrap: nowrap;
         }
 
         .btn {
-            padding: 16px 40px;
-            border-radius: 12px;
-            font-size: 1.15rem;
+            padding: 16px 48px;
+            border-radius: 50px;
+            font-size: 1.3rem;
             font-weight: 600;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: var(--transition);
-            white-space: nowrap;
+            transition: all 0.4s;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
 
         .btn-primary {
-            background: linear-gradient(90deg, #7c3aed, #5b21b6, #4f46e5);
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
             color: white;
-            box-shadow: 0 8px 32px rgba(124,58,237,0.45);
         }
 
         .btn-primary:hover {
@@ -186,25 +169,24 @@
         }
 
         .btn-outline {
-            border: 2px solid rgba(124,58,237,0.5);
-            color: var(--text-light);
-            background: rgba(124,58,237,0.1);
+            background: transparent;
+            border: 2px solid #a78bfa;
+            color: #a78bfa;
         }
 
         .btn-outline:hover {
-            background: rgba(124,58,237,0.2);
-            border-color: #a78bfa;
+            background: rgba(167,139,250,0.12);
             color: white;
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
+            gap: 40px;
             margin: 80px 0;
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+            padding: 50px 0;
+            border-top: 1px solid rgba(124,58,237,0.25);
+            border-bottom: 1px solid rgba(124,58,237,0.25);
         }
 
         .stat-item {
@@ -212,29 +194,26 @@
         }
 
         .stat-number {
-            font-size: 3.6rem;
+            font-size: 4.2rem;
             font-weight: 800;
             background: linear-gradient(90deg, #d8b4fe, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            line-height: 1;
         }
 
         .stat-label {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-top: 8px;
-        }
-
-        .features {
-            padding: 60px 0;
+            font-size: 1.2rem;
+            color: #b0a0ff;
+            margin-top: 12px;
         }
 
         .section-title {
             text-align: center;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 60px;
+            font-size: 3.6rem;
+            font-weight: 800;
+            margin: 80px 0 60px;
             background: linear-gradient(90deg, #c084fc, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
@@ -244,48 +223,51 @@
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
+            gap: 36px;
+            padding: 0 60px;
         }
 
         .feature-card {
-            background: var(--surface-2);
-            backdrop-filter: blur(12px);
+            background: var(--card);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 36px 28px;
-            transition: var(--transition);
+            border-radius: 20px;
+            padding: 40px 32px;
+            transition: all 0.4s;
+            text-align: center;
         }
 
         .feature-card:hover {
             transform: translateY(-12px);
             box-shadow: var(--glow);
-            border-color: rgba(124,58,237,0.6);
+            border-color: #a78bfa;
         }
 
         .feature-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #a78bfa;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .feature-title {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
             margin-bottom: 16px;
             color: white;
         }
 
         .feature-text {
-            color: var(--text-muted);
-            font-size: 1.05rem;
+            color: #b0a0ff;
+            font-size: 1.1rem;
             line-height: 1.6;
         }
 
         footer {
             padding: 60px 0 40px;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 1rem;
+            color: #b0a0ff;
+            font-size: 1.1rem;
+            border-top: 1px solid rgba(124,58,237,0.2);
         }
 
         footer a {
@@ -301,10 +283,8 @@
 <body>
 
 <header>
-    <div class="header-inner">
-        <a href="#" class="logo">
-            <span class="logo-gradient">GURU MD</span>
-        </a>
+    <div class="nav-inner">
+        <a href="#" class="logo">GURU MD</a>
 
         <nav>
             <ul>
@@ -320,21 +300,15 @@
 <main>
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">GURU MD</h1>
-                <p class="hero-subtitle">
-                    Modern, powerful and reliable WhatsApp automation solution.  
-                    Built for performance, security and ease of use.
-                </p>
+            <h1 class="hero-title">GURU MD</h1>
+            <p class="hero-subtitle">
+                Modern, powerful and reliable WhatsApp automation solution.<br>
+                Built for performance, security and ease of use.
+            </p>
 
-                <div class="action-buttons">
-                    <a href="./pair" class="btn btn-primary">
-                        <i class="fas fa-link"></i> Get Pair Code
-                    </a>
-                    <a href="./qr" class="btn btn-outline">
-                        <i class="fas fa-qrcode"></i> Scan QR Code
-                    </a>
-                </div>
+            <div class="action-buttons">
+                <a href="./pair" class="btn btn-primary">Get Pair Code</a>
+                <a href="./qr" class="btn btn-outline">Scan QR Code</a>
             </div>
         </div>
     </section>
