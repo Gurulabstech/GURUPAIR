@@ -143,14 +143,14 @@ router.get('/', async (req, res) => {
                             try {
                                 await sendButtons(Gifted, Gifted.user.id, {
                                     title: '',
-                                    text: 'GURUHBOT~' + b64data,
+                                    text: 'GURU~' + b64data,
                                     footer: `> *Powered by GuruTech*`,
                                     buttons: [
                                         { 
                                             name: 'cta_copy', 
                                             buttonParamsJson: JSON.stringify({ 
                                                 display_text: 'Copy Session ID', 
-                                                copy_code: 'GURUHBOT~' + b64data 
+                                                copy_code: 'GURU~' + b64data 
                                             }) 
                                         },
                                         {
@@ -164,7 +164,7 @@ router.get('/', async (req, res) => {
                                             name: 'cta_url',
                                             buttonParamsJson: JSON.stringify({
                                                 display_text: 'Join Channel',
-                                                url: 'https://whatsapp.com/channel/0029Vb3hlgX5kg7G0nFggl0Y'
+                                                url: 'https://whatsapp.com/channel/0029VbBNUAFFXUuUmJdrkj1f'
                                             })
                                         }
                                     ]
