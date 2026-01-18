@@ -41,6 +41,7 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         body {
@@ -48,6 +49,15 @@
                 radial-gradient(circle at 8% 12%, rgba(124,58,237,0.09) 0%, transparent 22%),
                 radial-gradient(circle at 92% 88%, rgba(99,128,255,0.07) 0%, transparent 25%);
             background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* ── Container ── */
@@ -55,16 +65,16 @@
             width: 100%;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 24px;
         }
 
         /* ── Header / Navbar ── */
         header {
-            position: fixed;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
-            height: 80px;
+            height: 64px;
             z-index: 1000;
             background: rgba(5, 3, 20, 0.88);
             backdrop-filter: blur(16px);
@@ -81,9 +91,9 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             font-weight: 700;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             letter-spacing: -0.5px;
             text-decoration: none;
         }
@@ -97,7 +107,7 @@
 
         nav ul {
             display: flex;
-            gap: 42px;
+            gap: 28px;
             list-style: none;
         }
 
@@ -105,11 +115,11 @@
             color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         nav a:hover {
@@ -119,21 +129,20 @@
 
         /* ── Hero ── */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 140px 0 100px;
+            padding: 60px 0 40px;
+            text-align: center;
         }
 
         .hero-content {
-            max-width: 780px;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
         .hero-title {
-            font-size: 4.6rem;
+            font-size: 3.2rem;
             font-weight: 700;
             line-height: 1.05;
-            margin-bottom: 1.4rem;
+            margin-bottom: 1rem;
             background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed, #6380ff);
             -webkit-background-clip: text;
             background-clip: text;
@@ -141,27 +150,30 @@
         }
 
         .hero-subtitle {
-            font-size: 1.38rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
-            margin-bottom: 3rem;
-            max-width: 640px;
+            margin-bottom: 1.5rem;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .action-buttons {
             display: flex;
-            gap: 20px;
+            gap: 14px;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 14px 32px;
-            border-radius: 12px;
+            padding: 10px 24px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: var(--transition);
             white-space: nowrap;
         }
@@ -169,12 +181,12 @@
         .btn-primary {
             background: linear-gradient(90deg, #7c3aed, #5b21b6, #4f46e5);
             color: white;
-            box-shadow: 0 8px 32px rgba(124,58,237,0.35);
+            box-shadow: 0 6px 24px rgba(124,58,237,0.35);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 48px rgba(124,58,237,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(124,58,237,0.5);
         }
 
         .btn-outline {
@@ -192,46 +204,46 @@
         /* ── Stats Row ── */
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin: 100px 0 140px;
-            padding: 40px 0;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 0 0 40px;
+            padding: 24px 0;
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
         }
 
         .stat-item {
             text-align: center;
-            padding: 20px 0;
+            padding: 12px 0;
         }
 
         .stat-number {
-            font-size: 3.2rem;
+            font-size: 2.4rem;
             font-weight: 700;
             background: linear-gradient(90deg, #d8b4fe, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .stat-label {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
         }
 
         /* ── Features ── */
         .features {
-            padding: 80px 0 140px;
+            padding: 40px 0 60px;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.6rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 80px;
+            margin-bottom: 40px;
             background: linear-gradient(90deg, #c084fc, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
@@ -240,52 +252,52 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .feature-card {
             background: var(--surface-2);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 36px 32px;
+            border-radius: 14px;
+            padding: 24px 20px;
             transition: var(--transition);
         }
 
         .feature-card:hover {
-            transform: translateY(-12px);
+            transform: translateY(-8px);
             box-shadow: var(--glow);
             border-color: rgba(124,58,237,0.5);
         }
 
         .feature-icon {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             color: #a78bfa;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         .feature-title {
-            font-size: 1.45rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: white;
         }
 
         .feature-text {
             color: var(--text-muted);
-            font-size: 0.98rem;
-            line-height: 1.65;
+            font-size: 0.92rem;
+            line-height: 1.55;
         }
 
         /* ── Footer ── */
         footer {
-            padding: 100px 0 60px;
+            padding: 24px 0;
             background: rgba(8, 5, 28, 0.6);
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.88rem;
         }
 
         footer a {
@@ -299,17 +311,19 @@
         }
 
         @media (max-width: 1024px) {
-            .hero-title { font-size: 3.8rem; }
-            .container { padding: 0 24px; }
-            nav ul { gap: 28px; }
+            .hero-title { font-size: 2.8rem; }
+            .container { padding: 0 20px; }
+            nav ul { gap: 20px; }
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 3.2rem; }
-            .hero-subtitle { font-size: 1.22rem; }
-            .action-buttons { flex-direction: column; }
-            .btn { justify-content: center; width: 100%; max-width: 360px; }
-            nav { display: none; } /* You can add mobile menu later if needed */
+            .hero-title { font-size: 2.4rem; }
+            .hero-subtitle { font-size: 1.05rem; }
+            .action-buttons { flex-direction: column; gap: 10px; }
+            .btn { justify-content: center; width: 100%; }
+            nav ul { gap: 16px; font-size: 0.9rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -332,88 +346,89 @@
     </div>
 </header>
 
-<section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">GURU MD</h1>
-            <p class="hero-subtitle">
-                Modern, powerful and reliable WhatsApp automation solution<br>
-                Built for performance, security and ease of use.
-            </p>
+<main>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">GURU MD</h1>
+                <p class="hero-subtitle">
+                    Modern, powerful and reliable WhatsApp automation solution. Built for performance, security and ease of use.
+                </p>
 
-            <div class="action-buttons">
-                <a href="./pair" class="btn btn-primary">
-                    <i class="fas fa-link"></i> Get Pair Code
-                </a>
-                <a href="./qr" class="btn btn-outline">
-                    <i class="fas fa-qrcode"></i> Scan QR Code
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="container">
-    <div class="stats">
-        <div class="stat-item">
-            <div class="stat-number">12.4K+</div>
-            <div class="stat-label">Active Sessions</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">1.8M+</div>
-            <div class="stat-label">Messages Daily</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">99.96%</div>
-            <div class="stat-label">Uptime</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">~120ms</div>
-            <div class="stat-label">Avg Response</div>
-        </div>
-    </div>
-
-    <section class="features">
-        <h2 class="section-title">Core Capabilities</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-link"></i></div>
-                <div class="feature-title">Pair Code Connection</div>
-                <p class="feature-text">Fast, secure and phone-independent way to connect your WhatsApp account</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
-                <div class="feature-title">Classic QR Login</div>
-                <p class="feature-text">Traditional scanning method — quick and widely supported</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-code"></i></div>
-                <div class="feature-title">Open Source</div>
-                <p class="feature-text">Full source code available — customize, audit, contribute</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                <div class="feature-title">High Performance</div>
-                <p class="feature-text">Optimized engine for low latency and high message throughput</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                <div class="feature-title">Enhanced Security</div>
-                <p class="feature-text">Multi-layer protection, session isolation & secure pairing</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
-                <div class="feature-title">Regular Updates</div>
-                <p class="feature-text">New features, bug fixes and WhatsApp protocol updates</p>
+                <div class="action-buttons">
+                    <a href="./pair" class="btn btn-primary">
+                        <i class="fas fa-link"></i> Get Pair Code
+                    </a>
+                    <a href="./qr" class="btn btn-outline">
+                        <i class="fas fa-qrcode"></i> Scan QR Code
+                    </a>
+                </div>
             </div>
         </div>
     </section>
-</div>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">12.4K+</div>
+                <div class="stat-label">Active Sessions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1.8M+</div>
+                <div class="stat-label">Messages Daily</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.96%</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">~120ms</div>
+                <div class="stat-label">Avg Response</div>
+            </div>
+        </div>
+
+        <section class="features">
+            <h2 class="section-title">Core Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-link"></i></div>
+                    <div class="feature-title">Pair Code Connection</div>
+                    <p class="feature-text">Fast, secure and phone-independent way to connect your WhatsApp account</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
+                    <div class="feature-title">Classic QR Login</div>
+                    <p class="feature-text">Traditional scanning method — quick and widely supported</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-code"></i></div>
+                    <div class="feature-title">Open Source</div>
+                    <p class="feature-text">Full source code available — customize, audit, contribute</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="feature-title">High Performance</div>
+                    <p class="feature-text">Optimized engine for low latency and high message throughput</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="feature-title">Enhanced Security</div>
+                    <p class="feature-text">Multi-layer protection, session isolation & secure pairing</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                    <div class="feature-title">Regular Updates</div>
+                    <p class="feature-text">New features, bug fixes and WhatsApp protocol updates</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
 
 <footer>
     <div class="container">
