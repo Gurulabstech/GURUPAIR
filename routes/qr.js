@@ -190,8 +190,10 @@ router.get('/', async (req, res) => {
                     }
 
                     try {
-                        let compressedData = zlib.gzipSync(sessionData);
-                        let b64data = compressedData.toString('base64');
+                        // ────────────────────────────────────────────────
+                        // CHANGED: No gzip → direct base64 of creds.json
+                        let b64data = sessionData.toString('base64');
+                        // ────────────────────────────────────────────────
 
                         await sendButtons(GURU, GURU.user.id, {
                             title: '',
