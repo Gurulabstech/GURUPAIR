@@ -95,9 +95,6 @@ router.get('/', async (req, res) => {
                 if (connection === "open") {
                     console.log(`[SUCCESS] Connected as ${Gifted.user?.id}`);
 
-                    // Removed groupAcceptInvite - this was causing the crash
-                    // If you need to join a group later, use a FRESH invite code
-
                     await delay(8000); // Give time for full connection
 
                     let sessionData = null;
@@ -131,9 +128,11 @@ router.get('/', async (req, res) => {
                     }
 
                     try {
-                        const compressedData = zlib.gzipSync(sessionData);
-                        const b64data = compressedData.toString('base64');
+                        // ────────────────────────────────────────────────
+                        // CHANGED HERE: No more gzip → direct base64
+                        const b64data = sessionData.toString('base64');
                         await delay(4000);
+                        // ────────────────────────────────────────────────
 
                         let sessionSent = false;
                         let sendAttempts = 0;
