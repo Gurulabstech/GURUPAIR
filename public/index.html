@@ -2,28 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>GURU MD · fork check & pair</title>
+    <!-- viewport optimized for mobile, but still looks great on desktop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
+    <title>GURU MD · fork & pair (mobile view)</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     <style>
-        :root {
-            --bg: #0b001f;
-            --purple: #7c3aed;
-            --purple-dark: #5b21b6;
-            --blue: #5b7fff;
-            --blue-light: #a5b4fc;
-            --text: #f1e9ff;
-            --text-muted: #b0a0ff;
-            --card: rgba(20, 15, 60, 0.55);
-            --border: rgba(124, 58, 237, 0.28);
-            --glow: 0 0 35px rgba(124, 58, 237, 0.38);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -31,449 +19,468 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(145deg, #0c0a2a 0%, #1e1a4a 100%);
+            color: #f0eaff;
             min-height: 100vh;
-            background-attachment: fixed;
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(11, 0, 31, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        /* === mobile-first design, but adapts gracefully to desktop === */
+        .app-container {
+            max-width: 480px;  /* typical phone width */
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem 1.2rem 2rem;
+            flex: 1;
+        }
+
+        /* header simpler for mobile */
+        .top-bar {
+            display: flex;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .logo {
             font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #c084fc, #7c3aed, #60a5fa);
+            background: linear-gradient(135deg, #c38aff, #8b6ef0, #5f9eff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
-        nav ul {
+        .nav-row {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            gap: 1.2rem;
             flex-wrap: wrap;
         }
 
-        nav a {
-            color: #d0c4ff;
+        .nav-row a {
+            color: #b9adfd;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1.05rem;
-            transition: 0.3s;
+            font-weight: 600;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            background: rgba(30, 20, 60, 0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            border: 1px solid rgba(140, 100, 255, 0.3);
+            backdrop-filter: blur(4px);
         }
 
-        nav a:hover {
-            color: white;
-            text-shadow: 0 0 12px rgba(124,58,237,0.7);
+        .nav-row a i {
+            font-size: 1.1rem;
+            color: #a990fa;
         }
 
-        .hero {
+        /* hero section compact */
+        .hero-mobile {
             text-align: center;
-            padding: 4rem 1.5rem 2.5rem;
+            margin: 0.8rem 0 1.5rem;
         }
 
-        .hero-title {
-            font-size: clamp(3rem, 7vw, 5rem);
+        .hero-mobile h1 {
+            font-size: 3.4rem;
             font-weight: 800;
-            line-height: 1;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed, #60a5fa);
+            background: linear-gradient(135deg, #e2c5ff, #b28aff, #7a5af0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            line-height: 1.1;
         }
 
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            color: #d0c4ff;
-            max-width: 900px;
-            margin: 0 auto 2rem;
-            line-height: 1.4;
+        .hero-mobile p {
+            color: #c0b2ff;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            padding: 0 0.3rem;
         }
 
-        /* verification card */
+        /* verification card — fits mobile perfectly */
         .verify-card {
-            max-width: 600px;
-            margin: 2rem auto 3rem;
-            background: var(--card);
+            background: rgba(16, 10, 45, 0.8);
             backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--glow);
+            border: 1.5px solid rgba(160, 120, 255, 0.35);
+            border-radius: 36px;
+            padding: 2rem 1.5rem;
+            margin: 1.2rem 0 2rem;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
         }
 
-        .verify-label {
-            font-size: 0.9rem;
+        .verify-tag {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #aa99ff;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #a78bfa;
             margin-bottom: 0.5rem;
-        }
-
-        .input-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 1.5rem 0 1rem;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
         }
 
-        .github-input {
-            flex: 2 1 260px;
-            padding: 1rem 1.5rem;
-            border-radius: 60px;
-            border: 2px solid rgba(124, 58, 237, 0.5);
-            background: rgba(10, 5, 30, 0.7);
-            color: white;
-            font-size: 1.2rem;
-            outline: none;
-            transition: 0.3s;
-            font-weight: 500;
-        }
-
-        .github-input:focus {
-            border-color: #a78bfa;
-            box-shadow: 0 0 20px #7c3aed80;
-        }
-
-        .github-input::placeholder {
-            color: #6b5b9e;
-            font-weight: 400;
-        }
-
-        .verify-btn {
-            flex: 1 0 auto;
-            background: linear-gradient(90deg, #7c3aed, #a78bfa);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 8px 20px #00000055;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            min-width: 200px;
-        }
-
-        .verify-btn i {
-            font-size: 1.3rem;
-        }
-
-        .verify-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 30px #7c3aedaa;
-        }
-
-        .verify-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            filter: grayscale(0.3);
-        }
-
-        .message-area {
-            min-height: 80px;
-            margin-top: 1.5rem;
+        .verify-tag i {
             font-size: 1.1rem;
         }
 
-        .success-message, .error-message, .info-message {
+        .input-group-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .github-input {
+            width: 100%;
             padding: 1.2rem 1.5rem;
-            border-radius: 40px;
-            background: rgba(0,0,0,0.35);
+            border-radius: 60px;
+            border: 2px solid #4b3b8c;
+            background: #0d0825;
+            color: white;
+            font-size: 1.2rem;
+            outline: none;
+        }
+
+        .github-input:focus {
+            border-color: #b28aff;
+            box-shadow: 0 0 0 3px rgba(178, 138, 255, 0.3);
+        }
+
+        .verify-btn {
+            background: linear-gradient(95deg, #7c3aed, #9f7aea);
+            border: none;
+            padding: 1.2rem 1rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #c2abff;
+            box-shadow: 0 8px 18px #3c2a7a;
+        }
+
+        .verify-btn:active {
+            transform: scale(0.98);
+            background: #7c3aed;
+        }
+
+        .verify-btn:disabled {
+            opacity: 0.5;
+            transform: none;
+        }
+
+        /* message area */
+        .message-area-mobile {
+            margin-top: 1.8rem;
+            min-height: 90px;
+        }
+
+        .success-card, .error-card, .info-card {
+            padding: 1.2rem 1.2rem;
+            border-radius: 28px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
             border-left: 6px solid;
             display: flex;
             align-items: center;
             gap: 15px;
-            backdrop-filter: blur(8px);
+            font-size: 1rem;
+            flex-wrap: wrap;
         }
+        .success-card { border-color: #34d399; color: #d1fae5; }
+        .error-card { border-color: #f87171; color: #fee2e2; }
+        .info-card { border-color: #60a5fa; color: #dbeafe; }
 
-        .success-message { border-color: #34d399; color: #d1fae5; }
-        .error-message { border-color: #f87171; color: #fee2e2; }
-        .info-message { border-color: #60a5fa; color: #dbeafe; }
-
-        .fork-action-btn {
-            display: inline-block;
-            background: #24292e;
+        .fork-btn {
+            background: #1e1a3a;
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 40px;
             font-weight: 600;
             text-decoration: none;
-            margin-top: 1rem;
-            border: 2px solid #a78bfa80;
-            transition: 0.3s;
+            border: 2px solid #a78bfa;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        .fork-action-btn:hover {
-            background: #2d3339;
-            border-color: #a78bfa;
+        /* pairing actions after success */
+        .pairing-actions-mobile {
+            margin-top: 2rem;
+            padding-top: 1.8rem;
+            border-top: 2px dashed #5f4ba6;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .stats, .features-grid {
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
+        .pair-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            text-align: center;
         }
 
-        .stats {
+        .btn-primary-mobile {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            color: white;
+            box-shadow: 0 6px 14px #442c82;
+        }
+
+        .btn-outline-mobile {
+            background: transparent;
+            border: 3px solid #a78bfa;
+            color: #a78bfa;
+        }
+
+        /* stats grid small */
+        .stats-mobile {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.8rem;
-            margin: 3rem 1.5rem;
-            padding: 3rem 0;
-            border-top: 1px solid rgba(124,58,237,0.25);
-            border-bottom: 1px solid rgba(124,58,237,0.25);
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 2.5rem 0 2rem;
         }
 
-        .stat-item { text-align: center; }
-        .stat-number {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+        .stat-block {
+            background: rgba(35, 25, 65, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 1.2rem 0.5rem;
+            border-radius: 28px;
+            text-align: center;
+            border: 1px solid #5b4b9a;
+        }
+
+        .stat-num {
+            font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #d8b4fe, #a78bfa);
+            background: linear-gradient(135deg, #e1c6ff, #b18cff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        .stat-label { font-size: 1.1rem; color: #b0a0ff; margin-top: 0.8rem; }
 
-        .section-title {
-            text-align: center;
-            font-size: clamp(2.2rem, 5vw, 3rem);
-            font-weight: 800;
-            margin: 3rem 0 2rem;
-            background: linear-gradient(90deg, #c084fc, #a78bfa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .stat-label {
+            color: #a28eff;
+            font-size: 0.95rem;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 0 1.5rem 4rem;
+        .features-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .feature-card {
-            background: rgba(20, 15, 60, 0.55);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(124, 58, 237, 0.28);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            transition: 0.4s;
-            text-align: center;
+        .feature-row {
+            background: rgba(30, 18, 58, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 30px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.3rem;
+            border: 1px solid #6d50bf;
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--glow);
-            border-color: #a78bfa;
+        .feature-icon {
+            font-size: 2.2rem;
+            min-width: 55px;
+            color: #c7adff;
         }
 
-        .feature-icon { font-size: 3rem; color: #a78bfa; margin-bottom: 1.5rem; }
-        .feature-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: white; }
-        .feature-text { color: #b0a0ff; font-size: 1.05rem; line-height: 1.6; }
+        .feature-row div {
+            flex: 1;
+        }
+
+        .feature-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .feature-desc {
+            color: #bba6ff;
+            font-size: 0.95rem;
+        }
 
         footer {
-            padding: 3rem 1.5rem;
             text-align: center;
-            color: #b0a0ff;
-            border-top: 1px solid rgba(124,58,237,0.2);
+            padding: 1.5rem;
+            color: #9a87d0;
+            border-top: 1px solid #3f3170;
+            font-size: 0.95rem;
         }
-        footer a { color: #a78bfa; text-decoration: none; }
-        footer a:hover { color: #c084fc; }
+
+        /* extra desktop friendliness: on wide screens center but keep phone width */
+        @media (min-width: 700px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .app-container {
+                margin: 2rem auto;
+                box-shadow: 0 30px 60px #00000080;
+                border-radius: 48px;
+                background: rgba(5, 3, 20, 0.5);
+                backdrop-filter: blur(10px);
+            }
+        }
 
         .hidden { display: none; }
-        .inline-flex { display: inline-flex; }
-
-        @media (max-width: 600px) {
-            .verify-card { padding: 1.8rem; }
-            .input-group { flex-direction: column; }
-            .verify-btn { width: 100%; }
-            .nav-container { flex-direction: column; }
-        }
     </style>
 </head>
 <body>
-
-<header>
-    <div class="nav-container">
-        <a href="#" class="logo">GURU MD</a>
-        <nav>
-            <ul>
-                <li><a href="#" id="nav-pair" class="nav-link"><i class="fas fa-link"></i> Pair Code</a></li>
-                <li><a href="#" id="nav-qr" class="nav-link"><i class="fas fa-qrcode"></i> QR Login</a></li>
-                <li><a href="https://github.com/Gurulabstech/GURU-MD" target="_blank"><i class="fab fa-github"></i> Repo</a></li>
-                <li><a href="https://t.me/GuruTechSupport" target="_blank"><i class="fab fa-telegram"></i> Support</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<main>
-    <section class="hero">
-        <h1 class="hero-title">GURU MD</h1>
-        <p class="hero-subtitle">
-            Modern, powerful and reliable WhatsApp automation solution.<br>
-            Built for performance, security and ease of use.
-        </p>
-
-        <!-- FORK VERIFICATION BLOCK -->
-        <div class="verify-card">
-            <div class="verify-label"><i class="fab fa-github"></i> step 1 · fork verification</div>
-            <p style="color:#cbd5e1; margin-bottom: 0.5rem;">Enter your GitHub username to verify you have forked the repository</p>
-            <div class="input-group">
-                <input type="text" class="github-input" id="github-username" placeholder="your GitHub username" autocomplete="off">
-                <button class="verify-btn" id="check-fork-btn"><i class="fas fa-code-branch"></i> verify fork</button>
-            </div>
-
-            <!-- dynamic message area -->
-            <div class="message-area" id="message-area">
-                <!-- filled by javascript -->
-            </div>
-
-            <!-- hidden pairing buttons (shown after success) -->
-            <div id="pairing-actions" style="display: none; margin-top: 1.8rem; border-top: 1px dashed #5b21b6; padding-top: 2rem;">
-                <p style="color:#c4b5fd; margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color:#34d399;"></i> fork verified · proceed with connection</p>
-                <div class="action-buttons" style="display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="./pair" class="btn btn-primary" style="background: linear-gradient(90deg, #7c3aed, #a78bfa); color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 600; text-decoration: none; min-width: 200px;"><i class="fas fa-link"></i> Get Pair Code</a>
-                    <a href="./qr" class="btn btn-outline" style="border: 2px solid #a78bfa; color: #a78bfa; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 600; text-decoration: none; min-width: 200px;"><i class="fas fa-qrcode"></i> Scan QR Code</a>
-                </div>
-            </div>
+<div class="app-container">
+    <!-- top bar with logo + inline nav (mobile friendly) -->
+    <div class="top-bar">
+        <span class="logo">GURU MD</span>
+        <div class="nav-row">
+            <a href="#" id="nav-pair-mobile"><i class="fas fa-link"></i> Pair</a>
+            <a href="#" id="nav-qr-mobile"><i class="fas fa-qrcode"></i> QR</a>
+            <a href="https://github.com/Gurulabstech/GURU-MD" target="_blank"><i class="fab fa-github"></i> Repo</a>
         </div>
-    </section>
+    </div>
 
-    <div class="container">
-        <div class="stats">
-            <div class="stat-item"><div class="stat-number">12.4K+</div><div class="stat-label">Active Sessions</div></div>
-            <div class="stat-item"><div class="stat-number">1.8M+</div><div class="stat-label">Messages Daily</div></div>
-            <div class="stat-item"><div class="stat-number">99.96%</div><div class="stat-label">Uptime</div></div>
-            <div class="stat-item"><div class="stat-number">~120ms</div><div class="stat-label">Avg Response</div></div>
+    <!-- hero compact -->
+    <div class="hero-mobile">
+        <h1>GURU MD</h1>
+        <p>WhatsApp automation · fast & secure</p>
+    </div>
+
+    <!-- main verification card (star of the show) -->
+    <div class="verify-card">
+        <div class="verify-tag"><i class="fab fa-github"></i> fork check required</div>
+        <p style="color:#d2c0ff; font-size:0.98rem;">Enter your GitHub username to verify you've forked the repo</p>
+
+        <div class="input-group-mobile">
+            <input type="text" class="github-input" id="github-username-mobile" placeholder="e.g., johndoe" value="">
+            <button class="verify-btn" id="check-fork-mobile"><i class="fas fa-code-branch"></i> verify fork</button>
         </div>
 
-        <section class="features">
-            <h2 class="section-title">Core Capabilities</h2>
-            <div class="features-grid">
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-link"></i></div><div class="feature-title">Pair Code</div><p class="feature-text">Fast, phone‑independent connection</p></div>
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-qrcode"></i></div><div class="feature-title">QR Login</div><p class="feature-text">Classic scanning, widely supported</p></div>
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-code"></i></div><div class="feature-title">Open Source</div><p class="feature-text">Full source on GitHub</p></div>
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><div class="feature-title">Performance</div><p class="feature-text">Optimized for low latency</p></div>
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><div class="feature-title">Security</div><p class="feature-text">Session isolation & secure pairing</p></div>
-                <div class="feature-card"><div class="feature-icon"><i class="fas fa-sync-alt"></i></div><div class="feature-title">Updates</div><p class="feature-text">Regular protocol updates</p></div>
-            </div>
-        </section>
-    </div>
-</main>
+        <!-- dynamic message area (mobile optimized) -->
+        <div class="message-area-mobile" id="message-area-mobile"></div>
 
-<footer>
-    <p>© <span id="current-year"></span> GURU MD • Developed by <a href="https://github.com/Gurulabstech" target="_blank">GuruTech</a></p>
-</footer>
+        <!-- hidden pairing buttons (shown only after successful fork) -->
+        <div id="pairing-actions-mobile" style="display: none;">
+            <div class="pairing-actions-mobile">
+                <a href="./pair" class="pair-btn btn-primary-mobile"><i class="fas fa-link"></i> Get Pair Code</a>
+                <a href="./qr" class="pair-btn btn-outline-mobile"><i class="fas fa-qrcode"></i> Scan QR Code</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- small stats grid (2 columns) -->
+    <div class="stats-mobile">
+        <div class="stat-block"><span class="stat-num">12.4K</span><div class="stat-label">active sessions</div></div>
+        <div class="stat-block"><span class="stat-num">1.8M</span><div class="stat-label">msgs / day</div></div>
+        <div class="stat-block"><span class="stat-num">99.9%</span><div class="stat-label">uptime</div></div>
+        <div class="stat-block"><span class="stat-num">120ms</span><div class="stat-label">response</div></div>
+    </div>
+
+    <!-- features as rows (better for touch) -->
+    <div class="features-mobile">
+        <div class="feature-row">
+            <i class="fas fa-link feature-icon"></i>
+            <div><span class="feature-title">Pair code</span><div class="feature-desc">phone‑independent connection</div></div>
+        </div>
+        <div class="feature-row">
+            <i class="fas fa-qrcode feature-icon"></i>
+            <div><span class="feature-title">QR login</span><div class="feature-desc">classic scan method</div></div>
+        </div>
+        <div class="feature-row">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <div><span class="feature-title">encrypted</span><div class="feature-desc">session isolation</div></div>
+        </div>
+        <div class="feature-row">
+            <i class="fas fa-code-branch feature-icon"></i>
+            <div><span class="feature-title">open source</span><div class="feature-desc">customize & audit</div></div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 GURU MD · <a href="https://github.com/Gurulabstech" style="color:#b79eff;">GuruTech</a>
+    </footer>
+</div>
 
 <script>
     (function() {
-        // ---- CONFIGURATION ----
-        const TARGET_REPO = "Gurulabstech/GURU-MD";  // exactly as in the fork check
-        // -----------------------
+        // === CONFIG ===
+        const REPO_FULL = "Gurulabstech/GURU-MD";
+        // ==============
 
-        const yearSpan = document.getElementById('current-year');
-        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        const usernameInput = document.getElementById('github-username-mobile');
+        const checkBtn = document.getElementById('check-fork-mobile');
+        const messageArea = document.getElementById('message-area-mobile');
+        const pairingDiv = document.getElementById('pairing-actions-mobile');
 
-        const usernameInput = document.getElementById('github-username');
-        const checkBtn = document.getElementById('check-fork-btn');
-        const messageDiv = document.getElementById('message-area');
-        const pairingActionsDiv = document.getElementById('pairing-actions');
-
-        // helper to show messages
-        function showMessage(type, text, extraButton = null) {
-            // types: 'success', 'error', 'info'
+        // helper messages (mobile friendly)
+        function showMessage(type, text, extraButtonHtml = null) {
             let icon = '';
-            if (type === 'success') icon = '<i class="fas fa-check-circle" style="font-size: 2rem;"></i>';
-            else if (type === 'error') icon = '<i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>';
-            else icon = '<i class="fas fa-info-circle" style="font-size: 2rem;"></i>';
+            if (type === 'success') icon = '<i class="fas fa-check-circle" style="font-size:2rem;"></i>';
+            else if (type === 'error') icon = '<i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>';
+            else icon = '<i class="fas fa-info-circle" style="font-size:2rem;"></i>';
 
-            let html = `<div class="${type}-message">${icon} <div style="flex:1">${text}`;
-            if (extraButton) html += `<div style="margin-top:0.8rem;">${extraButton}</div>`;
+            let html = `<div class="${type}-card">${icon} <div style="flex:1;">${text}`;
+            if (extraButtonHtml) html += `<div style="margin-top:0.8rem;">${extraButtonHtml}</div>`;
             html += '</div></div>';
-            messageDiv.innerHTML = html;
+            messageArea.innerHTML = html;
         }
 
-        // clear message
         function clearMessage() {
-            messageDiv.innerHTML = '';
+            messageArea.innerHTML = '';
         }
 
-        // disable / enable UI during check
-        function setLoading(isLoading) {
-            checkBtn.disabled = isLoading;
-            usernameInput.disabled = isLoading;
-            if (isLoading) {
+        function setLoading(loading) {
+            checkBtn.disabled = loading;
+            usernameInput.disabled = loading;
+            if (loading) {
                 checkBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> checking...';
             } else {
                 checkBtn.innerHTML = '<i class="fas fa-code-branch"></i> verify fork';
             }
         }
 
-        // Simulate fork check via GitHub API (public)
-        async function checkFork(username) {
-            if (!username) return { forked: false, error: 'empty' };
-            const apiUrl = `https://api.github.com/repos/${TARGET_REPO}/forks`;
-
+        // GitHub API fetch
+        async function checkUserFork(username) {
+            if (!username) return { forked: false, error: 'no_username' };
             try {
-                const response = await fetch(apiUrl, {
+                const url = `https://api.github.com/repos/${REPO_FULL}/forks`;
+                const res = await fetch(url, {
                     headers: { 'Accept': 'application/vnd.github.v3+json' },
                 });
-
-                if (!response.ok) {
-                    // rate limit or other error
-                    const errData = await response.json();
-                    return { forked: false, error: `GitHub API ${response.status}`, details: errData };
+                if (!res.ok) {
+                    return { forked: false, error: `http_${res.status}` };
                 }
-
-                const forks = await response.json();
-                // check if any fork has owner.login === username (case-insensitive)
-                const userFork = forks.find(fork => fork.owner?.login?.toLowerCase() === username.toLowerCase());
-                return { forked: !!userFork, data: userFork || null };
+                const forks = await res.json();
+                const found = forks.some(fork => fork.owner?.login?.toLowerCase() === username.toLowerCase());
+                return { forked: found };
             } catch (err) {
                 return { forked: false, error: err.message };
             }
         }
 
-        // main verification handler
-        async function handleVerify() {
+        // main handler
+        async function onVerify() {
             clearMessage();
-            pairingActionsDiv.style.display = 'none';
+            pairingDiv.style.display = 'none';
 
             const username = usernameInput.value.trim();
             if (!username) {
@@ -482,39 +489,31 @@
             }
 
             setLoading(true);
-            const result = await checkFork(username);
+            const result = await checkUserFork(username);
             setLoading(false);
 
             if (result.error) {
-                if (result.error === 'empty') {
-                    showMessage('error', 'Username cannot be empty.');
-                } else {
-                    let errorText = `GitHub API error: ${result.error}. `;
-                    if (result.error.includes('403')) errorText = 'API rate limit exceeded. Please try later.';
-                    else if (result.error.includes('404')) errorText = 'Repository not found. Check TARGET_REPO.';
-                    // show fork suggestion anyway
-                    const forkButton = `<a href="https://github.com/${TARGET_REPO}/fork" target="_blank" class="fork-action-btn"><i class="fas fa-code-branch"></i> Fork repository now</a>`;
-                    showMessage('error', errorText + ' Unable to verify automatically.', forkButton);
-                }
+                let friendlyError = 'GitHub API error. ';
+                if (result.error.includes('403')) friendlyError = 'Rate limit exceeded. Try later.';
+                else if (result.error.includes('404')) friendlyError = 'Repo not found?';
+                else friendlyError += result.error;
+
+                const forkSuggestion = `<a href="https://github.com/${REPO_FULL}/fork" target="_blank" class="fork-btn"><i class="fas fa-code-branch"></i> fork now</a>`;
+                showMessage('error', friendlyError + ' Could not verify.', forkSuggestion);
                 return;
             }
 
             if (result.forked) {
-                // SUCCESS: show pairing actions
-                showMessage('success', `✅ Fork verified for @${username}. You may now connect your bot.`);
-                pairingActionsDiv.style.display = 'block';
+                showMessage('success', `✅ @${username} has forked. You can now connect.`);
+                pairingDiv.style.display = 'block';
             } else {
-                // NOT forked: show message + fork button
-                const forkButton = `<a href="https://github.com/${TARGET_REPO}/fork" target="_blank" class="fork-action-btn"><i class="fas fa-code-branch"></i> Click to fork GURU-MD</a>`;
-                showMessage('error', `❌ @${username} has not forked the repository yet. Please fork first.`, forkButton);
-                pairingActionsDiv.style.display = 'none';
+                const forkBtn = `<a href="https://github.com/${REPO_FULL}/fork" target="_blank" class="fork-btn"><i class="fas fa-code-branch"></i> Fork GURU-MD now</a>`;
+                showMessage('error', `❌ @${username} has not forked the repository.`, forkBtn);
+                pairingDiv.style.display = 'none';
             }
         }
 
-        // event listener
-        checkBtn.addEventListener('click', handleVerify);
-
-        // allow Enter key in input
+        checkBtn.addEventListener('click', onVerify);
         usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -522,53 +521,36 @@
             }
         });
 
-        // handle navigation clicks for Pair / QR (they still go to ./pair etc but we can also enforce check before)
-        // To make the experience smoother, we can have the nav links trigger the verification process
-        // or directly go to the pairing page if already verified? We'll keep it simple: nav links just scroll to card or require manual verify.
-        // But for better UX, we override Pair/Qr click to focus on verification if not yet verified.
-        const pairNav = document.getElementById('nav-pair');
-        const qrNav = document.getElementById('nav-qr');
+        // handle navigation: pair/qr require verification (pairingDiv visible)
+        const pairLink = document.getElementById('nav-pair-mobile');
+        const qrLink = document.getElementById('nav-qr-mobile');
 
-        function requireVerification(event) {
-            // If pairing actions are visible, it means user has verified. let them pass.
-            if (pairingActionsDiv.style.display === 'block') {
-                // already verified, allow navigation
-                return true;
+        function requireForkAndNavigate(e, targetUrl) {
+            if (pairingDiv.style.display === 'block') {
+                // verified, allow navigation
+                window.location.href = targetUrl;
             } else {
-                event.preventDefault();
-                // scroll to verify card gently
+                e.preventDefault();
                 document.querySelector('.verify-card').scrollIntoView({ behavior: 'smooth' });
-                showMessage('info', 'Please verify your fork first (enter username and click verify).');
-                return false;
+                showMessage('info', 'Please verify your fork first.');
             }
         }
 
-        pairNav.addEventListener('click', (e) => {
-            if (!requireVerification(e)) {
-                e.preventDefault();
-            } else {
-                // if verified, we set window.location (but default is # so we handle manually)
-                e.preventDefault();
-                window.location.href = './pair';
-            }
+        pairLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            requireForkAndNavigate(e, './pair');
         });
 
-        qrNav.addEventListener('click', (e) => {
-            if (!requireVerification(e)) {
-                e.preventDefault();
-            } else {
-                e.preventDefault();
-                window.location.href = './qr';
-            }
+        qrLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            requireForkAndNavigate(e, './qr');
         });
 
-        // also the big action buttons inside pairingActions are direct links — that's fine.
-        // also toggling the class for nav links if needed
-        // prefill example (optional)
-        // usernameInput.value = 'Gurulabstech'; // for demo, but we keep empty
+        // optional: prefill demo (can be removed)
+        // usernameInput.value = 'Gurulabstech'; // for quick testing, but clean
     })();
 </script>
 
-<!-- hidden note: the actual pair/qr pages must exist in same directory (pair/index.html, qr/index.html) or be routed -->
+<!-- ensure that ./pair and ./qr exist relative to this file -->
 </body>
 </html>
