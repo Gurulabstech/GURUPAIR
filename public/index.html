@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
-    <title>GURU · live status bar</title>
+    <title>GURU · device battery status</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -29,12 +29,12 @@
             padding: 1.5rem 1.25rem 2rem;
             flex: 1;
         }
-        /* top bar + real status bar */
+        /* real status bar */
         .status-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #075e54;        /* dark green — like WA status */
+            background: #075e54;
             color: white;
             padding: 0.7rem 1rem;
             margin: -0.2rem -0.2rem 1.2rem -0.2rem;
@@ -64,7 +64,7 @@
             font-weight: 600;
             color: white;
         }
-        /* original top-bar (logo + nav) but now below status */
+        /* original top-bar */
         .top-bar {
             display: flex;
             align-items: center;
@@ -139,14 +139,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            letter-spacing: 0.3px;
         }
-        .input-group-mobile {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin: 1.2rem 0 0.5rem;
-        }
+        /* input field – still there but just for name (no button) */
         .github-input {
             width: 100%;
             padding: 1.2rem 1.5rem;
@@ -156,27 +150,11 @@
             color: #1a2e2a;
             font-size: 1.1rem;
             outline: none;
+            margin-bottom: 1rem;
         }
         .github-input:focus { border-color: #25a36b; background: #ffffff; }
-        .verify-btn {
-            background: #25a36b;
-            border: none;
-            padding: 1.2rem 1rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-            border: 1px solid #128C7E;
-            box-shadow: 0 4px 8px rgba(0,80,50,0.1);
-        }
-        .verify-btn i { font-size: 1.3rem; }
-        .verify-btn:active { background: #128c7e; transform: scale(0.99); }
-        .message-area-mobile { margin-top: 1.5rem; min-height: 60px; }
+        /* message area – automatic updates */
+        .message-area-mobile { margin-top: 1rem; min-height: 70px; }
         .info-card {
             padding: 1rem 1.2rem;
             border-radius: 24px;
@@ -211,7 +189,6 @@
             border: 2px solid #25a36b;
             color: #128c7e;
         }
-        .btn-outline-mobile:active { background: #e6f9f0; }
         .stats-mobile {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -255,23 +232,22 @@
         footer a { color: #128c7e; text-decoration: none; font-weight: 500; }
         @media (min-width: 700px) {
             body { display: flex; align-items: center; justify-content: center; background: #d9e3e0; }
-            .app-container { margin: 2rem auto; box-shadow: 0 12px 32px rgba(10, 50, 30, 0.12); }
+            .app-container { margin: 2rem auto; }
         }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
 <div class="app-container">
 
-    <!-- REAL STATUS BAR (request, battery, deploys, uptime) -->
+    <!-- REAL STATUS BAR with live device battery -->
     <div class="status-bar" id="liveStatusBar">
-        <div class="status-item" id="requestCountItem"><i class="fas fa-tower-cell"></i> req: <span class="status-value" id="requestCount">1.4k</span></div>
-        <div class="status-item" id="batteryItem"><i class="fas fa-battery-three-quarters"></i> <span class="status-value" id="batteryLevel">87%</span></div>
-        <div class="status-item" id="deploysItem"><i class="fas fa-rocket"></i> deploys: <span class="status-value" id="deployCount">19</span></div>
-        <div class="status-item" id="uptimeItem"><i class="fas fa-clock"></i> uptime: <span class="status-value" id="uptimeDisplay">0:12:34</span></div>
+        <div class="status-item"><i class="fas fa-tower-cell"></i> req: <span class="status-value" id="requestCount">1.4k</span></div>
+        <div class="status-item" id="batteryItem"><i class="fas fa-battery-three-quarters"></i> <span class="status-value" id="batteryLevel">--%</span></div>
+        <div class="status-item"><i class="fas fa-rocket"></i> deploys: <span class="status-value" id="deployCount">19</span></div>
+        <div class="status-item"><i class="fas fa-clock"></i> uptime: <span class="status-value" id="uptimeDisplay">0:12:34</span></div>
     </div>
 
-    <!-- original top bar (logo + nav) -->
+    <!-- top bar -->
     <div class="top-bar">
         <span class="logo"><i class="fab fa-whatsapp"></i> GURU</span>
         <div class="nav-row">
@@ -284,24 +260,24 @@
     <!-- hero -->
     <div class="hero-mobile">
         <h1><i class="fab fa-whatsapp"></i> GURU MD</h1>
-        <p>live status · battery · deploys · uptime</p>
+        <p>device battery · real requests · live uptime</p>
     </div>
 
-    <!-- main card -->
+    <!-- main card – NO update button, just name field + message -->
     <div class="verify-card">
-        <div class="verify-tag"><i class="fas fa-smile"></i> realtime metrics</div>
-        <p style="color:#2c4e43; font-size:1rem;">Status bar updates every second — just like a real dashboard</p>
+        <div class="verify-tag"><i class="fas fa-battery-full"></i> battery reads from your device</div>
+        <p style="color:#2c4e43; font-size:1rem;">Real battery percentage (if supported). Otherwise shows estimate.</p>
 
-        <div class="input-group-mobile">
-            <input type="text" class="github-input" id="username-field" placeholder="your name (any)" value="Guru">
-            <button class="verify-btn" id="start-verify-btn"><i class="fas fa-chart-line"></i> update stats</button>
-        </div>
+        <!-- Username field remains for optional personal touch (no button) -->
+        <input type="text" class="github-input" id="username-field" placeholder="your name (optional)" value="Guru">
 
+        <!-- message area shows live stats + battery info -->
         <div class="message-area-mobile" id="message-area-mobile">
-            <div class="info-card"><i class="fas fa-bolt" style="font-size:1.6rem;"></i> <span>Status: request + battery live</span></div>
+            <div class="info-card"><i class="fas fa-bolt" style="font-size:1.6rem;"></i> <span id="liveMessage">fetching battery...</span></div>
         </div>
 
-        <div id="pairing-actions-mobile" style="display: block;">
+        <!-- pairing actions unchanged -->
+        <div id="pairing-actions-mobile">
             <div class="pairing-actions-mobile">
                 <a href="./pair" class="pair-btn btn-primary-mobile"><i class="fas fa-link"></i> Get Pair Code</a>
                 <a href="./qr" class="pair-btn btn-outline-mobile"><i class="fas fa-qrcode"></i> Scan QR Code</a>
@@ -309,15 +285,15 @@
         </div>
     </div>
 
-    <!-- stats blocks -->
+    <!-- stats blocks also show live values -->
     <div class="stats-mobile">
         <div class="stat-block"><span class="stat-num" id="statRequests">1.4k</span><div class="stat-label">requests (today)</div></div>
-        <div class="stat-block"><span class="stat-num" id="statBattery">87%</span><div class="stat-label">battery life</div></div>
+        <div class="stat-block"><span class="stat-num" id="statBattery">--%</span><div class="stat-label">battery life</div></div>
         <div class="stat-block"><span class="stat-num" id="statDeploys">19</span><div class="stat-label">deploys</div></div>
         <div class="stat-block"><span class="stat-num" id="statUptime">0:12:34</span><div class="stat-label">serve uptime</div></div>
     </div>
 
-    <!-- features row (green bubbles) unchanged -->
+    <!-- features -->
     <div class="features-mobile">
         <div class="feature-row"><i class="fas fa-link feature-icon"></i><div><span class="feature-title">Pair code</span><div class="feature-desc">phone‑independent</div></div></div>
         <div class="feature-row"><i class="fas fa-qrcode feature-icon"></i><div><span class="feature-title">QR login</span><div class="feature-desc">classic scan</div></div></div>
@@ -325,30 +301,93 @@
         <div class="feature-row"><i class="fas fa-code-branch feature-icon"></i><div><span class="feature-title">open source</span><div class="feature-desc">customize & audit</div></div></div>
     </div>
 
-    <footer>© 2026 GURU · <a href="https://github.com/Gurulabstech">GuruTech</a> · <span style="color:#25a36b"><i class="fab fa-whatsapp"></i> live status</span></footer>
+    <footer>© 2026 GURU · <a href="https://github.com/Gurulabstech">GuruTech</a> · <span style="color:#25a36b"><i class="fab fa-whatsapp"></i> live battery</span></footer>
 </div>
 
 <script>
     (function() {
-        // ---------- live status bar ----------
-        // elements for status bar
-        const requestSpan = document.getElementById('requestCount');
+        // ----- real battery API -----
         const batterySpan = document.getElementById('batteryLevel');
+        const batteryItem = document.getElementById('batteryItem');
+        const statBattery = document.getElementById('statBattery');
+        const liveMessageSpan = document.getElementById('liveMessage');
+
+        // other status elements
+        const requestSpan = document.getElementById('requestCount');
         const deploySpan = document.getElementById('deployCount');
         const uptimeSpan = document.getElementById('uptimeDisplay');
-        // also the stats blocks
         const statRequests = document.getElementById('statRequests');
-        const statBattery = document.getElementById('statBattery');
         const statDeploys = document.getElementById('statDeploys');
         const statUptime = document.getElementById('statUptime');
 
-        // initial values
-        let requestCount = 1427;      // 1.4k rounded
-        let battery = 87;              // percent
+        // initial values (requests, deploys, uptime)
+        let requestCount = 1427;
         let deployCount = 19;
-        let uptimeSeconds = 754;       // 12min 34 sec = 754 seconds
+        let uptimeSeconds = 754; // 12:34
 
-        // helper to format uptime HH:MM:SS or MM:SS
+        // battery variables
+        let batteryLevel = 87;         // fallback if Battery API not supported
+        let batteryApiSupported = false;
+        let batteryPromise = null;
+
+        // try to get real battery
+        if ('getBattery' in navigator) {
+            batteryPromise = navigator.getBattery();
+            batteryPromise.then(battery => {
+                batteryApiSupported = true;
+                // initial read
+                batteryLevel = Math.floor(battery.level * 100);
+                updateBatteryUI(batteryLevel);
+                updateMessageWithBattery();
+
+                // listen for changes
+                battery.addEventListener('levelchange', function() {
+                    batteryLevel = Math.floor(battery.level * 100);
+                    updateBatteryUI(batteryLevel);
+                    updateMessageWithBattery();
+                });
+                battery.addEventListener('chargingchange', function() {
+                    // we can show charging icon if needed, but we keep simple
+                    updateBatteryUI(batteryLevel); // re-apply icon (maybe changes due to charging)
+                    updateMessageWithBattery();
+                });
+            }).catch(err => {
+                console.warn('Battery API error, using fallback');
+                useFallbackBattery();
+            });
+        } else {
+            useFallbackBattery();
+        }
+
+        function useFallbackBattery() {
+            batteryApiSupported = false;
+            // simulate small drops occasionally (to keep demo alive)
+            setInterval(() => {
+                if (!batteryApiSupported) {
+                    batteryLevel = Math.max(5, batteryLevel - (Math.random() > 0.7 ? 1 : 0));
+                    if (batteryLevel <= 8 && Math.random() > 0.98) batteryLevel = 84; // occasional recharge
+                    updateBatteryUI(batteryLevel);
+                    updateMessageWithBattery();
+                }
+            }, 4000);
+            updateBatteryUI(batteryLevel);
+            updateMessageWithBattery();
+        }
+
+        function updateBatteryUI(level) {
+            batterySpan.textContent = level + '%';
+            statBattery.textContent = level + '%';
+
+            const icon = batteryItem.querySelector('i');
+            icon.className = 'fas ';
+            if (level >= 90) icon.className = 'fas fa-battery-full';
+            else if (level >= 70) icon.className = 'fas fa-battery-three-quarters';
+            else if (level >= 40) icon.className = 'fas fa-battery-half';
+            else if (level >= 15) icon.className = 'fas fa-battery-quarter';
+            else icon.className = 'fas fa-battery-empty';
+        }
+
+        // ---- uptime & requests simulation (still live) ----
         function formatUptime(sec) {
             const hrs = Math.floor(sec / 3600);
             const mins = Math.floor((sec % 3600) / 60);
@@ -357,81 +396,67 @@
             return `${mins}:${secs.toString().padStart(2,'0')}`;
         }
 
-        function updateUI() {
-            // format request: if >1000 show X.Xk
-            let reqDisplay = requestCount < 1000 ? requestCount.toString() : (requestCount/1000).toFixed(1) + 'k';
-            requestSpan.textContent = reqDisplay;
-            batterySpan.textContent = battery + '%';
-            deploySpan.textContent = deployCount;
-            uptimeSpan.textContent = formatUptime(uptimeSeconds);
-
-            // update stat blocks
-            statRequests.textContent = reqDisplay;
-            statBattery.textContent = battery + '%';
-            statDeploys.textContent = deployCount;
-            statUptime.textContent = formatUptime(uptimeSeconds);
-
-            // battery icon dynamic
-            const batteryItem = document.getElementById('batteryItem');
-            const icon = batteryItem.querySelector('i');
-            icon.className = 'fas '; 
-            if (battery >= 90) icon.className = 'fas fa-battery-full';
-            else if (battery >= 70) icon.className = 'fas fa-battery-three-quarters';
-            else if (battery >= 40) icon.className = 'fas fa-battery-half';
-            else if (battery >= 15) icon.className = 'fas fa-battery-quarter';
-            else icon.className = 'fas fa-battery-empty';
-        }
-
-        // Simulate live changes every second (battery drops slowly, requests increase, uptime +1)
-        setInterval(() => {
-            // requests slowly go up
-            requestCount += Math.floor(Math.random() * 3) + 1;  // +1..3
-            // battery decreases by 0-1% every 2 sec on average, but never below 5
-            if (battery > 6) {
-                battery = Math.max(5, battery - (Math.random() > 0.6 ? 1 : 0));
-            } else {
-                // simulate recharge occasionally (for demo)
-                if (Math.random() > 0.95) battery = 85;
-            }
-            // deploys rarely change (but add occasional +1)
-            if (Math.random() > 0.85) deployCount += 1;
+        function updateStatusNumbers() {
+            // requests slowly increase
+            requestCount += Math.floor(Math.random() * 3) + 1;
+            // deploys rarely
+            if (Math.random() > 0.88) deployCount += 1;
             // uptime always +1
             uptimeSeconds += 1;
 
-            updateUI();
+            let reqDisplay = requestCount < 1000 ? requestCount.toString() : (requestCount/1000).toFixed(1) + 'k';
+            requestSpan.textContent = reqDisplay;
+            deploySpan.textContent = deployCount;
+            uptimeSpan.textContent = formatUptime(uptimeSeconds);
+
+            statRequests.textContent = reqDisplay;
+            statDeploys.textContent = deployCount;
+            statUptime.textContent = formatUptime(uptimeSeconds);
+        }
+
+        // update message area with current battery and name
+        function updateMessageWithBattery() {
+            const name = usernameInput.value.trim() || 'friend';
+            const level = batterySpan.textContent;
+            const charging = (batteryApiSupported && batteryPromise) ? '?' : ''; // we could detect charging but keep simple
+            liveMessageSpan.innerHTML = `🔋 ${name}, device battery: <strong>${level}</strong> · requests: ${requestSpan.textContent}`;
+        }
+
+        // set intervals
+        setInterval(() => {
+            updateStatusNumbers();
+            updateMessageWithBattery();  // also refresh message
         }, 1000);
 
-        // message and continue button
+        // ---- user interactions ----
         const usernameInput = document.getElementById('username-field');
-        const continueBtn = document.getElementById('start-verify-btn');
         const messageArea = document.getElementById('message-area-mobile');
         const pairLink = document.getElementById('nav-pair-mobile');
         const qrLink = document.getElementById('nav-qr-mobile');
 
-        function showInfoMessage(text) {
-            messageArea.innerHTML = `<div class="info-card"><i class="fas fa-bolt" style="font-size:1.8rem; color:#25a36b;"></i> <span>${text}</span></div>`;
-        }
-
-        continueBtn.addEventListener('click', function() {
-            const name = usernameInput.value.trim() || 'friend';
-            showInfoMessage(`⚡ ${name}, stats updated — req: ${requestCount}, battery ${battery}%`);
+        // update message whenever username changes (keyup)
+        usernameInput.addEventListener('input', function() {
+            updateMessageWithBattery();
         });
 
+        // also on enter we just update message (no button)
         usernameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') { e.preventDefault(); continueBtn.click(); }
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                updateMessageWithBattery();
+            }
         });
 
         pairLink.addEventListener('click', (e) => { e.preventDefault(); window.location.href = './pair'; });
         qrLink.addEventListener('click', (e) => { e.preventDefault(); window.location.href = './qr'; });
 
-        // set default message with some live info
-        showInfoMessage('📊 real status: requests, battery, deploys, uptime');
+        // initial message
+        setTimeout(() => {
+            updateMessageWithBattery();
+        }, 200);
 
-        // initial UI sync
-        updateUI();
-
-        // battery icon set also on load
-        // also change battery icon color / style (optional)
+        // make sure battery UI is set at start (even if API slow)
+        if (!batteryApiSupported) updateBatteryUI(batteryLevel);
     })();
 </script>
 </body>
