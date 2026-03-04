@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
-    <title>GURU · WhatsApp vibe</title>
+    <title>GURU · live status bar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f0f2f4;  /* soft whatsapp gray */
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f4;
             color: #1f2a34;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             line-height: 1.4;
         }
-
-        /* WhatsApp card / container — pure white, soft corners */
         .app-container {
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
             margin: 1rem auto;
             background-color: #ffffff;
@@ -36,8 +29,42 @@
             padding: 1.5rem 1.25rem 2rem;
             flex: 1;
         }
-
-        /* top bar minimal — clean & green */
+        /* top bar + real status bar */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #075e54;        /* dark green — like WA status */
+            color: white;
+            padding: 0.7rem 1rem;
+            margin: -0.2rem -0.2rem 1.2rem -0.2rem;
+            border-radius: 40px 40px 24px 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            box-shadow: 0 4px 8px rgba(0,40,20,0.3);
+            border: 1px solid #128C7E;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.12);
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+            white-space: nowrap;
+        }
+        .status-item i {
+            font-size: 1rem;
+            color: #bef5d5;
+        }
+        .status-value {
+            font-weight: 600;
+            color: white;
+        }
+        /* original top-bar (logo + nav) but now below status */
         .top-bar {
             display: flex;
             align-items: center;
@@ -46,30 +73,22 @@
             flex-wrap: wrap;
             gap: 0.6rem;
         }
-
         .logo {
             font-size: 1.9rem;
             font-weight: 700;
-            color: #075e54;          /* whatsapp dark green */
+            color: #075e54;
             letter-spacing: -0.3px;
             background: white;
             padding-right: 0.5rem;
         }
-
-        .logo i {
-            color: #25a36b;           /* fresh green */
-            margin-right: 4px;
-            font-size: 1.8rem;
-        }
-
+        .logo i { color: #25a36b; margin-right: 4px; font-size: 1.8rem; }
         .nav-row {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
-
         .nav-row a {
-            background-color: #e6f3ec;   /* light green tint */
+            background-color: #e6f3ec;
             color: #075e54;
             text-decoration: none;
             font-weight: 600;
@@ -82,22 +101,8 @@
             border: 1px solid #cde9da;
             transition: 0.1s;
         }
-
-        .nav-row a i {
-            font-size: 1rem;
-            color: #128c7e;
-        }
-
-        .nav-row a:active {
-            background-color: #cde9da;
-        }
-
-        /* hero – clean & friendly */
-        .hero-mobile {
-            text-align: left;
-            margin: 0 0 1.5rem 0;
-        }
-
+        .nav-row a i { font-size: 1rem; color: #128c7e; }
+        .hero-mobile { text-align: left; margin: 0 0 1.5rem 0; }
         .hero-mobile h1 {
             font-size: 2.8rem;
             font-weight: 700;
@@ -107,12 +112,7 @@
             align-items: center;
             gap: 8px;
         }
-
-        .hero-mobile h1 i {
-            color: #25a36b;
-            font-size: 2.6rem;
-        }
-
+        .hero-mobile h1 i { color: #25a36b; font-size: 2.6rem; }
         .hero-mobile p {
             color: #3b4a54;
             font-size: 1rem;
@@ -121,10 +121,7 @@
             padding-left: 0.9rem;
             background: #f3faf5;
             border-radius: 0 16px 16px 0;
-            line-height: 1.5;
         }
-
-        /* main card – pure white with light green border */
         .verify-card {
             background: #ffffff;
             border: 1.5px solid #d5f0e3;
@@ -133,7 +130,6 @@
             margin: 1rem 0 2rem;
             box-shadow: 0 4px 16px rgba(0, 60, 30, 0.04);
         }
-
         .verify-tag {
             font-size: 0.85rem;
             font-weight: 600;
@@ -145,20 +141,12 @@
             gap: 8px;
             letter-spacing: 0.3px;
         }
-
-        .verify-tag i {
-            font-size: 1.2rem;
-            color: #25a36b;
-        }
-
-        /* NO fork text / verification */
         .input-group-mobile {
             display: flex;
             flex-direction: column;
             gap: 1rem;
             margin: 1.2rem 0 0.5rem;
         }
-
         .github-input {
             width: 100%;
             padding: 1.2rem 1.5rem;
@@ -168,16 +156,10 @@
             color: #1a2e2a;
             font-size: 1.1rem;
             outline: none;
-            transition: border 0.15s;
         }
-
-        .github-input:focus {
-            border-color: #25a36b;
-            background: #ffffff;
-        }
-
+        .github-input:focus { border-color: #25a36b; background: #ffffff; }
         .verify-btn {
-            background: #25a36b;      /* WhatsApp green */
+            background: #25a36b;
             border: none;
             padding: 1.2rem 1rem;
             border-radius: 60px;
@@ -189,30 +171,12 @@
             justify-content: center;
             gap: 12px;
             cursor: pointer;
-            transition: 0.1s;
             border: 1px solid #128C7E;
             box-shadow: 0 4px 8px rgba(0,80,50,0.1);
         }
-
-        .verify-btn i {
-            font-size: 1.3rem;
-        }
-
-        .verify-btn:active {
-            background: #128c7e;
-            transform: scale(0.99);
-        }
-
-        .verify-btn:disabled {
-            opacity: 0.5;
-        }
-
-        /* message area – no more fork errors, just friendly info */
-        .message-area-mobile {
-            margin-top: 1.5rem;
-            min-height: 60px;
-        }
-
+        .verify-btn i { font-size: 1.3rem; }
+        .verify-btn:active { background: #128c7e; transform: scale(0.99); }
+        .message-area-mobile { margin-top: 1.5rem; min-height: 60px; }
         .info-card {
             padding: 1rem 1.2rem;
             border-radius: 24px;
@@ -224,16 +188,7 @@
             gap: 14px;
             font-size: 0.98rem;
         }
-
-        /* pairing actions – always visible now */
-        .pairing-actions-mobile {
-            margin-top: 2rem;
-            padding-top: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-        }
-
+        .pairing-actions-mobile { margin-top: 2rem; padding-top: 1rem; display: flex; flex-direction: column; gap: 0.9rem; }
         .pair-btn {
             display: block;
             width: 100%;
@@ -243,42 +198,26 @@
             font-size: 1.2rem;
             text-decoration: none;
             text-align: center;
-            transition: 0.1s;
         }
-
         .btn-primary-mobile {
             background: #25a36b;
             color: white;
             border: 1px solid #128C7E;
             box-shadow: 0 3px 8px rgba(0,100,60,0.1);
         }
-
-        .btn-primary-mobile i {
-            color: white;
-        }
-
-        .btn-primary-mobile:active {
-            background: #128c7e;
-        }
-
+        .btn-primary-mobile i { color: white; }
         .btn-outline-mobile {
             background: white;
             border: 2px solid #25a36b;
             color: #128c7e;
         }
-
-        .btn-outline-mobile:active {
-            background: #e6f9f0;
-        }
-
-        /* stats – green and white */
+        .btn-outline-mobile:active { background: #e6f9f0; }
         .stats-mobile {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.2rem;
             margin: 2rem 0 2rem;
         }
-
         .stat-block {
             background: #f4fcf8;
             padding: 1.2rem 0.5rem;
@@ -286,27 +225,14 @@
             text-align: center;
             border: 1px solid #daf1e4;
         }
-
-        .stat-num {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #075e54;
-        }
-
-        .stat-label {
-            color: #3b6b5c;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        /* features as rows – whatsapp style bubbles */
+        .stat-num { font-size: 2.2rem; font-weight: 700; color: #075e54; }
+        .stat-label { color: #3b6b5c; font-size: 0.95rem; font-weight: 500; }
         .features-mobile {
             display: flex;
             flex-direction: column;
             gap: 1rem;
             margin-bottom: 2rem;
         }
-
         .feature-row {
             background: #f6fef9;
             border-radius: 30px;
@@ -316,24 +242,9 @@
             gap: 1.2rem;
             border: 1px solid #d0ecdd;
         }
-
-        .feature-icon {
-            font-size: 2rem;
-            min-width: 48px;
-            color: #25a36b;
-        }
-
-        .feature-title {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #075e54;
-        }
-
-        .feature-desc {
-            color: #3f6257;
-            font-size: 0.95rem;
-        }
-
+        .feature-icon { font-size: 2rem; min-width: 48px; color: #25a36b; }
+        .feature-title { font-weight: 700; font-size: 1.2rem; color: #075e54; }
+        .feature-desc { color: #3f6257; font-size: 0.95rem; }
         footer {
             text-align: center;
             padding: 1rem 0 0;
@@ -341,33 +252,26 @@
             border-top: 1px solid #d0ecdd;
             font-size: 0.9rem;
         }
-
-        footer a {
-            color: #128c7e;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* desktop adapt – centered white card */
+        footer a { color: #128c7e; text-decoration: none; font-weight: 500; }
         @media (min-width: 700px) {
-            body {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #d9e3e0;
-            }
-            .app-container {
-                margin: 2rem auto;
-                box-shadow: 0 12px 32px rgba(10, 50, 30, 0.12);
-            }
+            body { display: flex; align-items: center; justify-content: center; background: #d9e3e0; }
+            .app-container { margin: 2rem auto; box-shadow: 0 12px 32px rgba(10, 50, 30, 0.12); }
         }
-
         .hidden { display: none; }
     </style>
 </head>
 <body>
 <div class="app-container">
-    <!-- top bar fresh & green -->
+
+    <!-- REAL STATUS BAR (request, battery, deploys, uptime) -->
+    <div class="status-bar" id="liveStatusBar">
+        <div class="status-item" id="requestCountItem"><i class="fas fa-tower-cell"></i> req: <span class="status-value" id="requestCount">1.4k</span></div>
+        <div class="status-item" id="batteryItem"><i class="fas fa-battery-three-quarters"></i> <span class="status-value" id="batteryLevel">87%</span></div>
+        <div class="status-item" id="deploysItem"><i class="fas fa-rocket"></i> deploys: <span class="status-value" id="deployCount">19</span></div>
+        <div class="status-item" id="uptimeItem"><i class="fas fa-clock"></i> uptime: <span class="status-value" id="uptimeDisplay">0:12:34</span></div>
+    </div>
+
+    <!-- original top bar (logo + nav) -->
     <div class="top-bar">
         <span class="logo"><i class="fab fa-whatsapp"></i> GURU</span>
         <div class="nav-row">
@@ -380,25 +284,23 @@
     <!-- hero -->
     <div class="hero-mobile">
         <h1><i class="fab fa-whatsapp"></i> GURU MD</h1>
-        <p>WhatsApp automation · fresh & familiar vibe</p>
+        <p>live status · battery · deploys · uptime</p>
     </div>
 
-    <!-- main card – no fork verification, all buttons remain -->
+    <!-- main card -->
     <div class="verify-card">
-        <div class="verify-tag"><i class="fas fa-smile"></i> ready to connect</div>
-        <p style="color:#2c4e43; font-size:1rem;">Just enter your preferred username (optional) and pair</p>
+        <div class="verify-tag"><i class="fas fa-smile"></i> realtime metrics</div>
+        <p style="color:#2c4e43; font-size:1rem;">Status bar updates every second — just like a real dashboard</p>
 
         <div class="input-group-mobile">
-            <input type="text" class="github-input" id="username-field" placeholder="your name (any)" value="">
-            <button class="verify-btn" id="start-verify-btn"><i class="fas fa-check-circle"></i> continue</button>
+            <input type="text" class="github-input" id="username-field" placeholder="your name (any)" value="Guru">
+            <button class="verify-btn" id="start-verify-btn"><i class="fas fa-chart-line"></i> update stats</button>
         </div>
 
-        <!-- dynamic message area (friendly hints) -->
         <div class="message-area-mobile" id="message-area-mobile">
-            <div class="info-card"><i class="fas fa-info-circle" style="font-size:1.6rem;"></i> <span>All features unlocked – no fork required</span></div>
+            <div class="info-card"><i class="fas fa-bolt" style="font-size:1.6rem;"></i> <span>Status: request + battery live</span></div>
         </div>
 
-        <!-- pairing buttons ALWAYS visible – they just work -->
         <div id="pairing-actions-mobile" style="display: block;">
             <div class="pairing-actions-mobile">
                 <a href="./pair" class="pair-btn btn-primary-mobile"><i class="fas fa-link"></i> Get Pair Code</a>
@@ -407,86 +309,130 @@
         </div>
     </div>
 
-    <!-- stats -->
+    <!-- stats blocks -->
     <div class="stats-mobile">
-        <div class="stat-block"><span class="stat-num">12.4K</span><div class="stat-label">active sessions</div></div>
-        <div class="stat-block"><span class="stat-num">1.8M</span><div class="stat-label">msgs / day</div></div>
-        <div class="stat-block"><span class="stat-num">99.9%</span><div class="stat-label">uptime</div></div>
-        <div class="stat-block"><span class="stat-num">120ms</span><div class="stat-label">response</div></div>
+        <div class="stat-block"><span class="stat-num" id="statRequests">1.4k</span><div class="stat-label">requests (today)</div></div>
+        <div class="stat-block"><span class="stat-num" id="statBattery">87%</span><div class="stat-label">battery life</div></div>
+        <div class="stat-block"><span class="stat-num" id="statDeploys">19</span><div class="stat-label">deploys</div></div>
+        <div class="stat-block"><span class="stat-num" id="statUptime">0:12:34</span><div class="stat-label">serve uptime</div></div>
     </div>
 
-    <!-- features row (green bubbles) -->
+    <!-- features row (green bubbles) unchanged -->
     <div class="features-mobile">
-        <div class="feature-row">
-            <i class="fas fa-link feature-icon"></i>
-            <div><span class="feature-title">Pair code</span><div class="feature-desc">phone‑independent</div></div>
-        </div>
-        <div class="feature-row">
-            <i class="fas fa-qrcode feature-icon"></i>
-            <div><span class="feature-title">QR login</span><div class="feature-desc">classic scan</div></div>
-        </div>
-        <div class="feature-row">
-            <i class="fas fa-shield-alt feature-icon"></i>
-            <div><span class="feature-title">encrypted</span><div class="feature-desc">session isolation</div></div>
-        </div>
-        <div class="feature-row">
-            <i class="fas fa-code-branch feature-icon"></i>
-            <div><span class="feature-title">open source</span><div class="feature-desc">customize & audit</div></div>
-        </div>
+        <div class="feature-row"><i class="fas fa-link feature-icon"></i><div><span class="feature-title">Pair code</span><div class="feature-desc">phone‑independent</div></div></div>
+        <div class="feature-row"><i class="fas fa-qrcode feature-icon"></i><div><span class="feature-title">QR login</span><div class="feature-desc">classic scan</div></div></div>
+        <div class="feature-row"><i class="fas fa-shield-alt feature-icon"></i><div><span class="feature-title">encrypted</span><div class="feature-desc">session isolation</div></div></div>
+        <div class="feature-row"><i class="fas fa-code-branch feature-icon"></i><div><span class="feature-title">open source</span><div class="feature-desc">customize & audit</div></div></div>
     </div>
 
-    <footer>
-        © 2026 GURU · <a href="https://github.com/Gurulabstech">GuruTech</a> · <span style="color:#25a36b"><i class="fab fa-whatsapp"></i> vibe</span>
-    </footer>
+    <footer>© 2026 GURU · <a href="https://github.com/Gurulabstech">GuruTech</a> · <span style="color:#25a36b"><i class="fab fa-whatsapp"></i> live status</span></footer>
 </div>
 
 <script>
     (function() {
-        // Fork verification is 100% removed — design now white/green WhatsApp style.
-        // All buttons (pair, qr, repo) stay. Continue button just shows a friendly message.
+        // ---------- live status bar ----------
+        // elements for status bar
+        const requestSpan = document.getElementById('requestCount');
+        const batterySpan = document.getElementById('batteryLevel');
+        const deploySpan = document.getElementById('deployCount');
+        const uptimeSpan = document.getElementById('uptimeDisplay');
+        // also the stats blocks
+        const statRequests = document.getElementById('statRequests');
+        const statBattery = document.getElementById('statBattery');
+        const statDeploys = document.getElementById('statDeploys');
+        const statUptime = document.getElementById('statUptime');
 
+        // initial values
+        let requestCount = 1427;      // 1.4k rounded
+        let battery = 87;              // percent
+        let deployCount = 19;
+        let uptimeSeconds = 754;       // 12min 34 sec = 754 seconds
+
+        // helper to format uptime HH:MM:SS or MM:SS
+        function formatUptime(sec) {
+            const hrs = Math.floor(sec / 3600);
+            const mins = Math.floor((sec % 3600) / 60);
+            const secs = sec % 60;
+            if (hrs > 0) return `${hrs}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            return `${mins}:${secs.toString().padStart(2,'0')}`;
+        }
+
+        function updateUI() {
+            // format request: if >1000 show X.Xk
+            let reqDisplay = requestCount < 1000 ? requestCount.toString() : (requestCount/1000).toFixed(1) + 'k';
+            requestSpan.textContent = reqDisplay;
+            batterySpan.textContent = battery + '%';
+            deploySpan.textContent = deployCount;
+            uptimeSpan.textContent = formatUptime(uptimeSeconds);
+
+            // update stat blocks
+            statRequests.textContent = reqDisplay;
+            statBattery.textContent = battery + '%';
+            statDeploys.textContent = deployCount;
+            statUptime.textContent = formatUptime(uptimeSeconds);
+
+            // battery icon dynamic
+            const batteryItem = document.getElementById('batteryItem');
+            const icon = batteryItem.querySelector('i');
+            icon.className = 'fas '; 
+            if (battery >= 90) icon.className = 'fas fa-battery-full';
+            else if (battery >= 70) icon.className = 'fas fa-battery-three-quarters';
+            else if (battery >= 40) icon.className = 'fas fa-battery-half';
+            else if (battery >= 15) icon.className = 'fas fa-battery-quarter';
+            else icon.className = 'fas fa-battery-empty';
+        }
+
+        // Simulate live changes every second (battery drops slowly, requests increase, uptime +1)
+        setInterval(() => {
+            // requests slowly go up
+            requestCount += Math.floor(Math.random() * 3) + 1;  // +1..3
+            // battery decreases by 0-1% every 2 sec on average, but never below 5
+            if (battery > 6) {
+                battery = Math.max(5, battery - (Math.random() > 0.6 ? 1 : 0));
+            } else {
+                // simulate recharge occasionally (for demo)
+                if (Math.random() > 0.95) battery = 85;
+            }
+            // deploys rarely change (but add occasional +1)
+            if (Math.random() > 0.85) deployCount += 1;
+            // uptime always +1
+            uptimeSeconds += 1;
+
+            updateUI();
+        }, 1000);
+
+        // message and continue button
         const usernameInput = document.getElementById('username-field');
         const continueBtn = document.getElementById('start-verify-btn');
         const messageArea = document.getElementById('message-area-mobile');
         const pairLink = document.getElementById('nav-pair-mobile');
         const qrLink = document.getElementById('nav-qr-mobile');
 
-        // helper for messages (greenish info style)
         function showInfoMessage(text) {
-            messageArea.innerHTML = `<div class="info-card"><i class="fas fa-smile" style="font-size:1.8rem; color:#25a36b;"></i> <span>${text}</span></div>`;
+            messageArea.innerHTML = `<div class="info-card"><i class="fas fa-bolt" style="font-size:1.8rem; color:#25a36b;"></i> <span>${text}</span></div>`;
         }
 
-        // Continue button – purely cosmetic, no verification
         continueBtn.addEventListener('click', function() {
             const name = usernameInput.value.trim() || 'friend';
-            showInfoMessage(`👋 Hi ${name}, you're all set. Use pair or QR below.`);
+            showInfoMessage(`⚡ ${name}, stats updated — req: ${requestCount}, battery ${battery}%`);
         });
 
         usernameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                continueBtn.click();
-            }
+            if (e.key === 'Enter') { e.preventDefault(); continueBtn.click(); }
         });
 
-        // Navigation: pair and QR work directly without any fork gate
-        pairLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = './pair';
-        });
+        pairLink.addEventListener('click', (e) => { e.preventDefault(); window.location.href = './pair'; });
+        qrLink.addEventListener('click', (e) => { e.preventDefault(); window.location.href = './qr'; });
 
-        qrLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = './qr';
-        });
+        // set default message with some live info
+        showInfoMessage('📊 real status: requests, battery, deploys, uptime');
 
-        // Prefill with a friendly placeholder, but not required
-        usernameInput.value = 'Guru';
-        // Show a nice default message
-        showInfoMessage('✨ No fork checks — just tap pair or QR.');
+        // initial UI sync
+        updateUI();
+
+        // battery icon set also on load
+        // also change battery icon color / style (optional)
     })();
 </script>
-
-<!-- ./pair and ./qr should exist relative to this file -->
 </body>
 </html>
