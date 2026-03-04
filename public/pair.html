@@ -3,47 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GURU MD | PAIR CODE</title>
+    <title>GURU MD · WhatsApp vibe | PAIR CODE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* WhatsApp green/white palette — all original design preserved, only colours changed */
         :root {
-            --primary-gold: #e2b05e;
-            --dark-gold: #9e7a41;
-            --bg-brown: #1a0f05;
-            --card-brown: #3d2411;
-            --input-bg: #ffffff;
-            --text-gold: #f3d098;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            --wa-green-dark: #075e54;      /* WhatsApp dark green */
+            --wa-green-medium: #128c7e;     /* WhatsApp medium */
+            --wa-green-light: #25a36b;       /* WhatsApp fresh green */
+            --wa-teal: #1ebea5;              /* WhatsApp teal accent */
+            --wa-bg: #e5f0e8;                 /* soft background (used outside) */
+            --card-white: #ffffff;             /* pure white card */
+            --input-border: #d5f0e3;           /* mint border */
+            --text-dark: #1f2a34;              /* dark text */
+            --text-soft: #3b4a54;               /* secondary text */
+            --shadow-wa: 0 8px 24px rgba(0, 70, 40, 0.08);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background: var(--bg-brown);
-            background-image: radial-gradient(circle, #4d2d18 0%, #1a0f05 100%);
+            background: var(--wa-bg);           /* soft greenish grey, like WhatsApp web bg */
+            background-image: radial-gradient(circle at 20% 30%, #d1e6db 0%, #c2ddcf 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: #fff;
-            animation: colorCycle 30s ease infinite;
+            color: var(--text-dark);
+            /* removed colour cycle animation – keeping design static but fresh */
         }
 
-        @keyframes colorCycle {
-            0% { filter: hue-rotate(0deg) brightness(1); }     /* Original tones (black/brown base) */
-            25% { filter: hue-rotate(280deg) brightness(0.9); } /* Purple shift */
-            50% { filter: hue-rotate(330deg) brightness(1.1); } /* Pink hues */
-            75% { filter: hue-rotate(0deg) brightness(1.3); }   /* White/bright tones */
-            100% { filter: hue-rotate(0deg) brightness(1); }    /* Back to start */
-        }
-
-        /* Particles like the image stars */
+        /* subtle star overlay (light, to match green theme) */
         .stars {
             position: fixed;
             width: 100%;
@@ -52,7 +48,7 @@
             left: 0;
             background: url('https://www.transparenttextures.com/patterns/stardust.png');
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.1;                       /* much lighter */
             z-index: 0;
         }
 
@@ -60,24 +56,29 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: #9e7a41;
+            background: var(--wa-green-medium);
             color: white;
             padding: 8px 15px;
-            border-radius: 8px;
+            border-radius: 40px;                 /* rounder like WA */
             text-decoration: none;
             font-size: 14px;
-            border: 1px solid var(--primary-gold);
+            border: 1px solid var(--wa-green-light);
             z-index: 10;
+            box-shadow: var(--shadow-wa);
+            font-weight: 600;
+        }
+        .home-btn i {
+            margin-right: 6px;
         }
 
         .container {
-            background: linear-gradient(145deg, #4d2d18, #2a180b);
+            background: var(--card-white);        /* pure white card */
             width: 100%;
             max-width: 450px;
             padding: 30px;
-            border-radius: 30px;
-            border: 4px solid var(--primary-gold);
-            box-shadow: 0 0 50px rgba(226, 176, 94, 0.2);
+            border-radius: 36px;                  /* softer */
+            border: 2px solid var(--wa-green-light);
+            box-shadow: var(--shadow-wa);
             position: relative;
             text-align: left;
             z-index: 1;
@@ -93,86 +94,132 @@
         .logo-box {
             width: 70px;
             height: 70px;
-            border: 2px solid var(--primary-gold);
-            border-radius: 12px;
+            border: 2px solid var(--wa-green-light);
+            border-radius: 20px;                  /* more modern */
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(255,255,255,0.05);
-            box-shadow: 0 0 15px var(--primary-gold);
+            background: #e6f9ef;                   /* light mint */
+            box-shadow: 0 0 0 4px rgba(37, 163, 107, 0.1);
         }
 
         .logo-box i {
-            font-size: 30px;
-            color: white;
+            font-size: 36px;
+            color: var(--wa-green-dark);
         }
 
         .title-section h1 {
-            color: var(--primary-gold);
+            color: var(--wa-green-dark);
             font-size: 22px;
             margin-bottom: 5px;
-            letter-spacing: 1px;
+            letter-spacing: 0px;
+            font-weight: 700;
         }
 
         .title-section h2 {
             font-size: 28px;
-            color: var(--text-gold);
+            color: var(--wa-green-medium);
             margin-bottom: 10px;
         }
 
         .title-section p {
             font-size: 12px;
-            color: #d3d3d3;
-            line-height: 1.4;
+            color: var(--text-soft);
+            line-height: 1.5;
             max-width: 80%;
         }
 
+        /* NEW: guidance note – fresh green card, welcoming */
+        .guidance-note {
+            background: #ecfcf3;
+            border-left: 6px solid var(--wa-green-light);
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 2px 8px rgba(0,80,50,0.05);
+        }
+        .guidance-note i {
+            font-size: 2rem;
+            color: var(--wa-green-dark);
+        }
+        .guidance-note div p {
+            color: #0a3028;
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+        .guidance-note div small {
+            color: #3b6b5c;
+            font-size: 0.85rem;
+            display: block;
+            line-height: 1.4;
+        }
+
         .input-area {
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .input-group {
             display: flex;
             align-items: center;
-            background: var(--input-bg);
-            border-radius: 8px;
-            margin-bottom: 15px;
-            padding: 5px 10px;
+            background: #f9fffc;                   /* very light green-white */
+            border-radius: 60px;                    /* pill shape */
+            margin-bottom: 18px;
+            padding: 6px 18px;
+            border: 2px solid var(--input-border);
+            transition: 0.1s;
+        }
+        .input-group:focus-within {
+            border-color: var(--wa-green-light);
         }
 
         .input-group i {
-            color: #3d2411;
-            margin-right: 10px;
+            color: var(--wa-green-medium);
+            margin-right: 12px;
+            font-size: 1.2rem;
         }
 
         .input-group input {
             border: none;
             outline: none;
             width: 100%;
-            padding: 10px;
+            padding: 12px 0;
             font-size: 16px;
-            color: #333;
+            color: var(--text-dark);
             background: transparent;
+        }
+        .input-group input::placeholder {
+            color: #a8c3b5;
+            font-weight: 400;
         }
 
         .get-code-btn {
-            background: linear-gradient(to bottom, #9e7a41, #3d2411);
+            background: var(--wa-green-light);       /* solid fresh green */
             color: white;
-            border: 1px solid var(--primary-gold);
-            width: 70%;
+            border: none;
+            width: 80%;
             margin: 10px auto;
             display: block;
-            padding: 12px;
-            border-radius: 20px;
+            padding: 16px 12px;
+            border-radius: 60px;                     /* WhatsApp style */
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: 0.3s;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(18, 140, 126, 0.3);
+            transition: 0.1s;
+            border: 1px solid var(--wa-green-dark);
         }
 
         .get-code-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(226, 176, 94, 0.3);
+            transform: translateY(-1px);
+            background: var(--wa-green-medium);
+            box-shadow: 0 8px 18px rgba(7, 94, 84, 0.2);
+        }
+        .get-code-btn:active {
+            transform: scale(0.98);
         }
 
         #result {
@@ -181,50 +228,69 @@
         }
 
         .result-box {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--primary-gold);
-            padding: 15px;
-            border-radius: 10px;
+            background: #f0faf4;                     /* very light mint */
+            border: 2px solid var(--wa-green-light);
+            padding: 20px;
+            border-radius: 28px;
             margin-bottom: 15px;
         }
 
         #pair-code {
-            font-size: 24px;
-            color: var(--primary-gold);
-            font-weight: bold;
+            font-size: 32px;
+            color: var(--wa-green-dark);
+            font-weight: 800;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
+            background: white;
+            padding: 12px;
+            border-radius: 24px;
+            border: 1px solid #cde9da;
+        }
+
+        #status-msg {
+            font-size: 12px;
+            color: var(--wa-green-medium);
+            margin-top: 10px;
+            font-weight: 500;
+            text-align: center;
         }
 
         .btn-row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
         }
 
         .action-btn {
-            background: linear-gradient(to bottom, #9e7a41, #3d2411);
-            border: 1px solid var(--primary-gold);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
+            background: white;
+            border: 2px solid var(--wa-green-light);
+            color: var(--wa-green-dark);
+            padding: 12px 15px;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 1rem;
+            font-weight: 600;
             flex: 1;
             text-align: center;
             text-decoration: none;
-            transition: 0.2s;
+            transition: 0.1s;
+        }
+        .action-btn:hover {
+            background: #e6f9f0;
+        }
+        .action-btn:active {
+            background: #cde9da;
         }
 
         .spinner {
             display: none;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid var(--primary-gold);
+            width: 36px;
+            height: 36px;
+            border: 4px solid rgba(37, 163, 107, 0.1);
+            border-top: 4px solid var(--wa-green-light);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 10px auto;
+            margin: 15px auto;
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -237,35 +303,44 @@
     <div class="container">
         <div class="header-top">
             <div class="title-section">
-                <h1>GURU MD | Pair Code</h1>
-                <h2>'HI: 🥳</h2>
-                <p>The system is ready. Enter your number with country code (e.g., 254...) to get your code.</p>
+                <h1>GURU MD <span style="color: #128c7e;">✦</span></h1>
+                <h2>👋 HI, WELCOME!</h2>
+                <p>Enter your number with country code (e.g., 254...) to get your pairing code.</p>
             </div>
             <div class="logo-box">
-                <i class="fas fa-video"></i>
+                <i class="fas fa-whatsapp"></i>   <!-- whatsapp icon for vibe -->
+            </div>
+        </div>
+
+        <!-- GUIDANCE NOTE – welcoming and linking instructions (exactly as requested) -->
+        <div class="guidance-note">
+            <i class="fab fa-whatsapp"></i>
+            <div>
+                <p>✨ Thanks for using GURU MD!</p>
+                <small>Open WhatsApp → Linked Devices → Link a Device → then enter the 8-digit code below.</small>
             </div>
         </div>
 
         <div class="input-area">
             <div class="input-group">
-                <i class="fas fa-phone"></i>
-                <input type="text" id="phone-number" placeholder="Enter Phone (e.g. 254...)" inputmode="numeric">
+                <i class="fas fa-phone-alt"></i>
+                <input type="text" id="phone-number" placeholder="e.g., 254712345678" inputmode="numeric">
             </div>
 
-            <button id="submit" class="get-code-btn">Get Code</button>
+            <button id="submit" class="get-code-btn"><i class="fas fa-link" style="margin-right: 8px;"></i> Get Pair Code</button>
             <div id="loading-spinner" class="spinner"></div>
         </div>
 
         <div id="result">
             <div class="result-box">
-                <p style="font-size: 12px; margin-bottom: 5px; color: var(--text-gold);">Your Pairing Code:</p>
+                <p style="font-size: 13px; margin-bottom: 8px; color: var(--wa-green-medium);">🔐 your 8‑digit code</p>
                 <div id="pair-code">LOADING...</div>
-                <p id="status-msg" style="font-size: 11px; color: #4caf50; margin-top: 5px;">Pairing session is active now.</p>
+                <p id="status-msg">✓ session active — enter code on your phone</p>
             </div>
             
             <div class="btn-row">
-                <button id="copy-btn" class="action-btn">Copy Code</button>
-                <a href="./" class="action-btn">Back</a>
+                <button id="copy-btn" class="action-btn"><i class="far fa-copy"></i> Copy</button>
+                <a href="./" class="action-btn"><i class="fas fa-arrow-left"></i> Back</a>
             </div>
         </div>
     </div>
@@ -280,27 +355,23 @@
         const copyBtn = document.getElementById('copy-btn');
 
         submitButton.addEventListener('click', async () => {
-            // Clean the input to keep only numbers
             let number = phoneNumberInput.value.trim().replace(/[^0-9]/g, '');
             
-            // Validation: Must start with country code (cannot start with 0)
             if (!number || number.startsWith('0')) {
-                alert("Error: Please start with your country code (e.g. 254...) and do not start with 0.");
+                alert("❌ Start with your country code (e.g., 254...), no leading zero.");
                 return;
             }
 
             if (number.length < 10) {
-                alert("Error: Number is too short. Please include your full country code.");
+                alert("❌ Number too short. Include full country code.");
                 return;
             }
 
-            // UI feedback
             submitButton.style.display = 'none';
             loadingSpinner.style.display = 'block';
             resultDiv.style.display = 'none';
 
             try {
-                // Call the pairing API
                 const { data } = await axios.get(`/code?number=${number}`);
                 
                 if (data && data.code) {
@@ -319,27 +390,25 @@
             }
         });
 
-        // Copy function without browser alert
         copyBtn.addEventListener('click', () => {
             const codeText = pairCodeDiv.textContent;
             
-            if (codeText && codeText !== "LOADING..." && codeText !== "SERVICE ERROR") {
+            if (codeText && !codeText.includes("LOADING") && !codeText.includes("ERROR")) {
                 navigator.clipboard.writeText(codeText).then(() => {
-                    const originalText = copyBtn.textContent;
-                    copyBtn.textContent = "Copied!";
-                    copyBtn.style.color = "#4caf50"; // Turn green temporarily
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    copyBtn.style.background = "#e6f9f0";
+                    copyBtn.style.borderColor = "#25a36b";
                     
                     setTimeout(() => {
-                        copyBtn.textContent = originalText;
-                        copyBtn.style.color = "white";
+                        copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                        copyBtn.style.background = "white";
+                        copyBtn.style.borderColor = "#25a36b";
                     }, 2000);
-                }).catch(err => {
-                    console.error('Could not copy text: ', err);
-                });
+                }).catch(err => console.error(err));
             }
         });
 
-        // Allow pressing Enter to submit
         phoneNumberInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 submitButton.click();
@@ -348,4 +417,3 @@
     </script>
 </body>
 </html>
-
