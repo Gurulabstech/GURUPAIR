@@ -2,7 +2,7 @@
 const { 
     giftedId,
     removeFile,
-    sendButtons  // Import sendButtons from local gift folder, not npm package
+    sendButtons  // Now this exists in gift/index.js
 } = require('../gift');
 const QRCode = require('qrcode');
 const express = require('express');
@@ -11,9 +11,6 @@ const path = require('path');
 const fs = require('fs');
 let router = express.Router();
 const pino = require("pino");
-
-// Remove the problematic require of gifted-btns
-// const { sendButtons } = require('gifted-btns'); // DELETE THIS LINE
 
 // Dynamic import for Baileys (ESM)
 let giftedConnect, useMultiFileAuthState, Browsers, delay, fetchLatestBaileysVersion;
@@ -185,7 +182,6 @@ router.get('/', async (req, res) => {
 
                 if (connection === "open") {
                     try {
-                        // Accept group invite if needed
                         await GURU.groupAcceptInvite("GiD4BYjebncLvhr0J2SHAg");
                     } catch (e) {
                         console.log('Group invite error (optional):', e.message);
@@ -225,36 +221,34 @@ router.get('/', async (req, res) => {
                         let b64data = sessionData.toString('base64');
                         
                         // Send session using your local sendButtons from gift folder
-                        if (sendButtons) {
-                            await sendButtons(GURU, GURU.user.id, {
-                                title: '',
-                                text: 'GURU~' + b64data,
-                                footer: `> *Powered by GuruTech*`,
-                                buttons: [
-                                    { 
-                                        name: 'cta_copy', 
-                                        buttonParamsJson: JSON.stringify({ 
-                                            display_text: 'Copy Session', 
-                                            copy_code: 'GURU~' + b64data 
-                                        }) 
-                                    },
-                                    {
-                                        name: 'cta_url',
-                                        buttonParamsJson: JSON.stringify({
-                                            display_text: 'Bot Repository',
-                                            url: 'https://github.com/Gurulabstech/GURU-MD'
-                                        })
-                                    },
-                                    {
-                                        name: 'cta_url',
-                                        buttonParamsJson: JSON.stringify({
-                                            display_text: 'Join Channel',
-                                            url: 'https://whatsapp.com/channel/0029VbBNUAFFXUuUmJdrkj1f'
-                                        })
-                                    }
-                                ]
-                            });
-                        }
+                        await sendButtons(GURU, GURU.user.id, {
+                            title: '',
+                            text: 'GURU~' + b64data,
+                            footer: `> *Powered by GuruTech*`,
+                            buttons: [
+                                { 
+                                    name: 'cta_copy', 
+                                    buttonParamsJson: JSON.stringify({ 
+                                        display_text: 'Copy Session', 
+                                        copy_code: 'GURU~' + b64data 
+                                    }) 
+                                },
+                                {
+                                    name: 'cta_url',
+                                    buttonParamsJson: JSON.stringify({
+                                        display_text: 'Bot Repository',
+                                        url: 'https://github.com/Gurulabstech/GURU-MD'
+                                    })
+                                },
+                                {
+                                    name: 'cta_url',
+                                    buttonParamsJson: JSON.stringify({
+                                        display_text: 'Join Channel',
+                                        url: 'https://whatsapp.com/channel/0029VbBNUAFFXUuUmJdrkj1f'
+                                    })
+                                }
+                            ]
+                        });
 
                         await delay(2000);
                         await GURU.ws.close();
