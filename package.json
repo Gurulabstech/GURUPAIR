@@ -16,7 +16,7 @@
     "pino": "^8.17.2",
     "pino-pretty": "^13.0.0",
     "qrcode": "^1.5.3",
-    "gift": "file:gift"
+    "gifted-btns": "file:gift"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
