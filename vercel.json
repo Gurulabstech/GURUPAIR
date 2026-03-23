@@ -7,5 +7,10 @@
         "includeFiles": "gift/**"
       }
     }
-  ]
+  ],
+  "functions": {
+    "index.js": {
+      "maxDuration": 10
+    }
+  }
 }
